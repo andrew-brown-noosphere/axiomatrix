@@ -405,9 +405,6 @@ export default function NewSite() {
             <p className="text-zinc-500 text-sm">
               © {new Date().getFullYear()} {brand.copyrightOwner}. All rights reserved.
             </p>
-            <p className="text-zinc-500 text-sm">
-              {brand.location}
-            </p>
           </div>
         </div>
       </footer>

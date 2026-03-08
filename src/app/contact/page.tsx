@@ -2,7 +2,7 @@
 
 import { useState, useRef } from "react";
 import Image from "next/image";
-import { Mail, MapPin, Calendar, Play, Pause } from "lucide-react";
+import { Mail, Calendar, Play, Pause } from "lucide-react";
 import { brand } from "@/lib/brand";
 
 export default function ContactPage() {
@@ -101,16 +101,6 @@ onEnded={handleVideoEnd}
                     <a href={`mailto:${brand.email}`} className="text-zinc-400 hover:text-cyan-400">
                       {brand.email}
                     </a>
-                  </div>
-                </div>
-
-                <div className="flex items-start gap-4">
-                  <div className="p-3 rounded-lg bg-cyan-500/10 text-cyan-400">
-                    <MapPin className="h-5 w-5" />
-                  </div>
-                  <div>
-                    <p className="font-medium text-white">Location</p>
-                    <p className="text-zinc-400">{brand.location}</p>
                   </div>
                 </div>
 

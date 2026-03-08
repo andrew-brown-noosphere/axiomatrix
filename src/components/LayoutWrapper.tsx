@@ -192,9 +192,6 @@ export default function LayoutWrapper({
               <span>🇬🇧</span>
               <span>🇨🇦</span>
             </div>
-            <p className="text-zinc-500 text-sm">
-              {brand.location}
-            </p>
           </div>
         </div>
       </footer>
