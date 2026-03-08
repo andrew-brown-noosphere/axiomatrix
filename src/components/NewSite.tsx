@@ -72,16 +72,6 @@ const values = [
   },
 ];
 
-const partnerLogos = [
-  { name: "Noosphere", logo: "/img/partners/noosphere.png" },
-  { name: "Thales", logo: "/img/partners/thales.png" },
-  { name: "Veracode", logo: "/img/partners/veracode.png" },
-  { name: "Imperva", logo: "/img/partners/imperva.png" },
-  { name: "Hexagon", logo: "/img/partners/hexagon.png" },
-  { name: "SignPath", logo: "/img/partners/signpath.png" },
-  { name: "Sigstore", logo: "/img/partners/sigstore.png" },
-];
-
 export default function NewSite() {
   return (
     <div className="min-h-screen bg-[#0a0a0f] text-zinc-100 bg-dramatic noise-overlay">
@@ -195,27 +185,6 @@ export default function NewSite() {
               Start Evaluation
               <ArrowRight className="h-4 w-4" />
             </Link>
-          </div>
-        </div>
-      </section>
-
-      {/* Partner Logos */}
-      <section className="py-12 border-t border-zinc-800/50 overflow-hidden">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <p className="text-center text-sm text-zinc-500 mb-8 uppercase tracking-wide">
-            Trusted Partners & Technologies
-          </p>
-          <div className="relative">
-            <div className="flex animate-scroll gap-12 items-center">
-              {[...partnerLogos, ...partnerLogos].map((partner, index) => (
-                <div
-                  key={index}
-                  className="flex-shrink-0 h-12 w-32 flex items-center justify-center grayscale hover:grayscale-0 opacity-60 hover:opacity-100 transition-all"
-                >
-                  <span className="text-zinc-400 font-semibold text-lg">{partner.name}</span>
-                </div>
-              ))}
-            </div>
           </div>
         </div>
       </section>
