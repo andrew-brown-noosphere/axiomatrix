@@ -1,0 +1,65 @@
+Product
+
+Name,Noosphere AI Gateway
+Tagline,Trust layer for the AI era
+One-liner,"The gateway between your organization and AI - identity, signing, provenance, trust"
+
+---
+
+What It Implies (let them fill it in)
+
+Buyer Hears,They Imagine
+"AI Gateway",Control point for AI traffic
+,Where AI enters and exits my org
+,Governance and visibility
+,Security for AI workflows
+,Trust infrastructure
+
+---
+
+Capabilities (under the hood)
+
+Capability,Plain English,Technical Reality
+Identity,Know who's asking,DID:Web Service
+Signing,Prove who made it,Code Signing Agent
+Provenance,Track where it came from,Content Credentials (C2PA)
+Trust,Verify relationships,Trust Graph
+Control,Observe and govern,LLM Proxy
+
+---
+
+Tiers
+
+Tier,Name,What It Is,Price Anchor
+1,Gateway Starter,Identity + 1 capability,~$1K/mo
+2,Gateway Pro,Full platform,~$5K/mo
+3,Gateway Enterprise,Everything + SLAs + support,~$25K/mo
+
+---
+
+$1M Pipeline (Simplified)
+
+Tier,ACV,Deals,Pipeline
+Starter,$12K,20,$240K
+Pro,$60K,10,$600K
+Enterprise,$200K,1,$200K
+TOTAL,,31,$1.04M
+
+---
+
+Positioning vs Alternatives
+
+Alternative,What They Do,Noosphere AI Gateway Difference
+API Gateways (Kong/Apigee),Route traffic,We add trust + identity + provenance
+AI Observability (Langfuse),Monitor LLMs,We add signing + attestation + control
+Code Signing (SignPath),Sign code,We extend to content + AI outputs + identity
+Identity (Okta/Auth0),Human identity,We add machine/agent identity + trust graphs
+
+---
+
+GTM Message
+
+Headline,The AI Gateway
+Subhead,"Identity. Signing. Provenance. Trust."
+Body,"Your AI agents are talking to the world. The Noosphere AI Gateway ensures you know who's acting, what they produced, and who to trust."
+CTA,"See the Gateway →"
