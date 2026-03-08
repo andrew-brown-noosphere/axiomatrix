@@ -117,8 +117,8 @@ export default function AIAssistant() {
                 <div className="absolute -bottom-0.5 -right-0.5 w-3 h-3 bg-green-500 rounded-full border-2 border-zinc-900" />
               </div>
               <div>
-                <h3 className="font-display font-semibold text-white text-sm">
-                  AxiomMatrix
+                <h3 className="font-display font-semibold text-sm">
+                  <span className="text-cyan-400">Axiom</span><span className="text-white">Matrix</span>
                 </h3>
                 <p className="text-xs text-zinc-400">AI Assistant</p>
               </div>

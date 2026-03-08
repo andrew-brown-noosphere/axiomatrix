@@ -171,8 +171,8 @@ export default async function BlogPost({ params }: Props) {
               {/* Footer */}
               <footer className="mt-16 pt-8 border-t border-zinc-800">
                 <div className="bg-zinc-900/50 border border-zinc-800 rounded-xl p-6">
-                  <h3 className="text-lg font-semibold text-white mb-2">
-                    About AxiomMatrix
+                  <h3 className="text-lg font-semibold mb-2">
+                    About <span className="text-cyan-400">Axiom</span><span className="text-white">Matrix</span>
                   </h3>
                   <p className="text-zinc-400 mb-4">
                     We build DevSecOps infrastructure with AI-assisted security operations.
