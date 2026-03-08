@@ -1,9 +1,9 @@
 import Link from "next/link";
-import { Phone, ClipboardCheck, Settings, GraduationCap, ArrowRight } from "lucide-react";
+import { MessageSquare, ClipboardCheck, Settings, Bot, ArrowRight } from "lucide-react";
 
 const services = [
   {
-    icon: Phone,
+    icon: MessageSquare,
     title: "Free Discovery Call",
     description: "A DevSecOps discovery call is designed to help you understand where you stand today and what it will take to strengthen your security posture.",
     href: "/contact",
@@ -21,10 +21,10 @@ const services = [
     href: "/tailored-ci-cd-pipeline-security-integration",
   },
   {
-    icon: GraduationCap,
-    title: "DevSecOps Training",
-    description: "We help your team build a lasting DevSecOps mindset because tools don't secure systems—people do.",
-    href: "/devsecops-training",
+    icon: Bot,
+    title: "Custom AI Agents & MCP Servers",
+    description: "We build secure agentic workflows—custom APIs, AI agents, and MCP servers that integrate safely into your infrastructure. See our work at DevExp.ai.",
+    href: "/contact",
   },
 ];
 

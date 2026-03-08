@@ -9,7 +9,7 @@ Our services:
 - Free Discovery Call - understand where you stand and what it takes to strengthen security posture
 - Core DevSecOps Maturity Assessment - identify security challenges, deliver high-impact plans
 - Tailored CI/CD Pipeline Security Integration - integrate security into delivery pipelines
-- DevSecOps Training - build lasting DevSecOps mindset in teams
+- Custom AI Agents & MCP Servers - secure agentic workflows, custom APIs, and MCP servers (see DevExp.ai)
 
 We work with Enterprise, Government (FedRAMP), and EU Compliance (NIS2, Cyber Resilience Act, GDPR).
 

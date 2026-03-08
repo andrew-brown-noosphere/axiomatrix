@@ -4,9 +4,9 @@ import Link from "next/link";
 import Image from "next/image";
 import {
   MessageSquare,
+  Bot,
   ClipboardCheck,
   Settings,
-  GraduationCap,
   ArrowRight,
   Shield,
   Users,
@@ -43,10 +43,10 @@ const services = [
     href: "/contact",
   },
   {
-    icon: GraduationCap,
-    title: "DevSecOps Training",
+    icon: Bot,
+    title: "Custom AI Agents & MCP Servers",
     description:
-      "We help your team build a lasting DevSecOps mindset, because tools don't secure systems—people do.",
+      "We build secure agentic workflows—custom APIs, AI agents, and MCP servers that integrate safely into your infrastructure.",
     href: "/contact",
   },
 ];
