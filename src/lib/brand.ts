@@ -3,6 +3,7 @@
 export const brand = {
   // [CUSTOMIZE] Company name and messaging
   name: "YourBrand",
+  copyrightOwner: "Voyant, LLC", // Legal entity for copyright
   tagline: "Your Tagline Here",
   description: "Your company description for DevSecOps consulting services.",
 

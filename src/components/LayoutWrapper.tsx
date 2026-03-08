@@ -182,7 +182,7 @@ export default function LayoutWrapper({
           {/* Bottom bar */}
           <div className="pt-8 border-t border-zinc-800/50 flex flex-col md:flex-row justify-between items-center gap-4">
             <p className="text-zinc-500 text-sm">
-              &copy; {new Date().getFullYear()} {brand.name}. All rights reserved.
+              &copy; {new Date().getFullYear()} {brand.copyrightOwner}. All rights reserved.
             </p>
             <div className="flex items-center gap-3 text-lg" title="Serving clients globally">
               <span>🇺🇸</span>
