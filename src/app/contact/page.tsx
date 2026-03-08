@@ -2,7 +2,7 @@
 
 import { useState, useRef } from "react";
 import Image from "next/image";
-import { Mail, Phone, MapPin, Calendar, Play, Pause } from "lucide-react";
+import { Mail, MapPin, Calendar, Play, Pause } from "lucide-react";
 import { brand } from "@/lib/brand";
 
 export default function ContactPage() {
@@ -92,18 +92,6 @@ onEnded={handleVideoEnd}
               <h2 className="text-2xl font-bold text-white mb-8">Contact Information</h2>
 
               <div className="space-y-6">
-                <div className="flex items-start gap-4">
-                  <div className="p-3 rounded-lg bg-cyan-500/10 text-cyan-400">
-                    <Phone className="h-5 w-5" />
-                  </div>
-                  <div>
-                    <p className="font-medium text-white">Phone</p>
-                    <a href={brand.phoneHref} className="text-zinc-400 hover:text-cyan-400">
-                      {brand.phone}
-                    </a>
-                  </div>
-                </div>
-
                 <div className="flex items-start gap-4">
                   <div className="p-3 rounded-lg bg-cyan-500/10 text-cyan-400">
                     <Mail className="h-5 w-5" />
