@@ -1,42 +1,9 @@
-export interface Author {
-  id: string;
-  name: string;
-  role: string;
-  image: string;
-  bio: string;
-}
-
-export const authors: Record<string, Author> = {
-  edward: {
-    id: "edward",
-    name: "Edward Liebig",
-    role: "CTO",
-    image: "/img/people/edward.png",
-    bio: "A seasoned cybersecurity technology leader focused on delivering resilient, business-aligned security capabilities.",
-  },
-  dmitrii: {
-    id: "dmitrii",
-    name: "Dmitrii Lomakin",
-    role: "Head of Sales",
-    image: "/img/people/dmitrii.png",
-    bio: "An experienced application security sales professional focused on delivering measurable security and business value.",
-  },
-  igor: {
-    id: "igor",
-    name: "Igor Matlin",
-    role: "Application Security Architect",
-    image: "/img/people/igor.png",
-    bio: "A results-driven application security architect focused on strengthening application defenses and aligning security with business priorities.",
-  },
-};
-
 export interface BlogPost {
   slug: string;
   title: string;
   description: string;
   category: string;
   date: string;
-  authorId: string;
   image?: string;
   content: string;
   augmented?: boolean; // Enable AI assistant + Clarify buttons
@@ -49,7 +16,6 @@ export const blogPosts: BlogPost[] = [
     description: "The first AI Act obligations are already in effect. Your organization may be out of compliance right now. Here's what security leaders need to know.",
     category: "Compliance",
     date: "March 6, 2026",
-    authorId: "igor",
     image: "/img/blog_images/4.jpg",
     augmented: true,
     content: `
@@ -379,7 +345,6 @@ You'll get an instant readiness score and can download a PDF report with tailore
     description: "Your AI agents have access to your most sensitive data and operate inside your network. Traditional perimeter security doesn't work here. Here's what does.",
     category: "AI Security",
     date: "March 5, 2026",
-    authorId: "edward",
     image: "/img/blog_images/3.jpg",
     augmented: true,
     content: `
@@ -561,7 +526,6 @@ Build the teams. Define the workflows. Implement the controls. Do it before you 
     description: "OWASP just made it official: software supply chain attacks are now a top-3 threat. But here's what they're really saying — attackers aren't just targeting your dependencies. They're targeting you.",
     category: "Security",
     date: "March 5, 2026",
-    authorId: "edward",
     image: "/img/blog_images/5.jpg",
     augmented: true,
     content: `
@@ -727,7 +691,6 @@ The question isn't whether supply chain attacks will continue. It's whether you'
     description: "The European Commission just published draft guidance for the CRA. Unlike voluntary frameworks, the CRA carries legal force — non-compliance means your products can't be sold in the EU market. Are you ready?",
     category: "Compliance",
     date: "March 5, 2026",
-    authorId: "edward",
     image: "/img/blog_images/4.jpg",
     augmented: true,
     content: `
@@ -998,7 +961,6 @@ You'll get an instant readiness score and can download a PDF report with tailore
     description: "AI coding assistants are already in your pipeline. Here's what security leaders need to understand before the next board meeting.",
     category: "CISO",
     date: "March 3, 2026",
-    authorId: "dmitrii",
     image: "/img/blog_images/1.jpg",
     content: `
 I was on a call last week with a CISO who told me: "We have a policy against AI in our development environment."
@@ -1079,7 +1041,6 @@ The CISOs who get this right will enable AI adoption while managing risk. The on
     description: "Your CI/CD pipeline was built for human developers. Now it's being accessed by AI agents, creating attack vectors your security team hasn't considered.",
     category: "Risk",
     date: "March 1, 2026",
-    authorId: "dmitrii",
     image: "/img/blog_images/2.jpg",
     content: `
 Last quarter, a Fortune 500 company discovered that an AI coding assistant had been suggesting code that included a subtle vulnerability — a logging statement that exposed authentication tokens.
@@ -1174,7 +1135,6 @@ This isn't optional security enhancement. It's table stakes for organizations th
     description: "Your security team was hired to review code written by humans. Now they're reviewing code written by AI. Here's how the best security leaders are adapting.",
     category: "Leadership",
     date: "February 28, 2026",
-    authorId: "edward",
     image: "/img/blog_images/3.jpg",
     content: `
 I recently talked with a VP of Security who was frustrated: "My AppSec team is drowning. Code volume has doubled since developers started using AI assistants. We can't review everything, so we're either blocking releases or rubber-stamping. Neither is acceptable."
@@ -1294,7 +1254,6 @@ The ROI question isn't "how many people do we need?" It's "what infrastructure l
     description: "SolarWinds changed how boards think about supply chain risk. Here's how to brief executives without losing them in technical details.",
     category: "CISO",
     date: "February 20, 2026",
-    authorId: "dmitrii",
     image: "/img/blog_images/4.jpg",
     content: `
 Every CISO I know has been asked the same question by their board since SolarWinds: "Could this happen to us?"
@@ -1402,7 +1361,6 @@ If you only have 60 seconds, say this:
     description: "Your development team is complaining that security is slowing them down. They're probably right. Here's how to fix it without accepting more risk.",
     category: "Leadership",
     date: "February 15, 2026",
-    authorId: "edward",
     image: "/img/blog_images/5.jpg",
     content: `
 A CTO told me recently: "Security is killing our velocity. Every release takes two weeks longer because of security review. Engineering is furious."
@@ -1522,7 +1480,6 @@ Don't try to automate everything at once. Demonstrate that automation works, the
     description: "Manual compliance processes are expensive, error-prone, and slow. Here's how leading organizations are automating evidence collection without losing rigor.",
     category: "Strategy",
     date: "February 8, 2026",
-    authorId: "dmitrii",
     image: "/img/blog_images/1.jpg",
     content: `
 Last year, I watched an enterprise spend three weeks preparing for a SOC 2 audit. The security team pulled engineers into meetings, collected screenshots, assembled evidence binders, and answered the same questions they answered last year.
@@ -1677,7 +1634,6 @@ When compliance is automated, it stops being a burden and becomes infrastructure
     description: "Your incident response playbook assumes humans wrote the compromised code. When AI is involved, the investigation gets more complicated.",
     category: "CISO",
     date: "January 30, 2026",
-    authorId: "edward",
     image: "/img/blog_images/3.jpg",
     content: `
 Your SOC alerts on suspicious behavior in production. The initial triage identifies a vulnerability in code that was deployed last week. Standard incident response kicks in.
@@ -1831,6 +1787,3 @@ export function getAllPosts(): BlogPost[] {
   return blogPosts;
 }
 
-export function getAuthor(authorId: string): Author | undefined {
-  return authors[authorId];
-}

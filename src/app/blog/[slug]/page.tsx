@@ -2,7 +2,7 @@ import { notFound } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
 import { ArrowLeft } from "lucide-react";
-import { getPost, getAllPosts, getAuthor } from "@/lib/blog-posts";
+import { getPost, getAllPosts } from "@/lib/blog-posts";
 import type { Metadata } from "next";
 import BlogAssistant from "@/components/BlogAssistant";
 import BlogContentWithClarify from "@/components/BlogContentWithClarify";
@@ -108,7 +108,6 @@ export default async function BlogPost({ params }: Props) {
     notFound();
   }
 
-  const author = getAuthor(post.authorId);
   const contentHtml = parseMarkdown(post.content);
   const isAugmented = post.augmented === true;
 
@@ -161,26 +160,9 @@ export default async function BlogPost({ params }: Props) {
                 <h1 className="text-3xl sm:text-4xl font-bold text-white mb-4">
                   {post.title}
                 </h1>
-                <p className="text-xl text-zinc-300 italic text-center mb-6">
+                <p className="text-xl text-zinc-300 italic text-center">
                   {post.description}
                 </p>
-
-                {/* Author */}
-                {author && (
-                  <div className="flex items-center gap-4 pt-6 border-t border-zinc-800">
-                    <Image
-                      src={author.image}
-                      alt={author.name}
-                      width={48}
-                      height={48}
-                      className="rounded-full"
-                    />
-                    <div>
-                      <p className="font-medium text-white">{author.name}</p>
-                      <p className="text-sm text-zinc-500">{author.role}</p>
-                    </div>
-                  </div>
-                )}
               </header>
 
               {/* Content */}
@@ -249,26 +231,9 @@ export default async function BlogPost({ params }: Props) {
           <h1 className="text-3xl sm:text-4xl font-bold text-white mb-4">
             {post.title}
           </h1>
-          <p className="text-xl text-zinc-300 italic text-center mb-6">
+          <p className="text-xl text-zinc-300 italic text-center">
             {post.description}
           </p>
-
-          {/* Author */}
-          {author && (
-            <div className="flex items-center gap-4 pt-6 border-t border-zinc-800">
-              <Image
-                src={author.image}
-                alt={author.name}
-                width={48}
-                height={48}
-                className="rounded-full"
-              />
-              <div>
-                <p className="font-medium text-white">{author.name}</p>
-                <p className="text-sm text-zinc-500">{author.role}</p>
-              </div>
-            </div>
-          )}
         </header>
 
         {/* Content */}

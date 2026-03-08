@@ -1,7 +1,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import { ArrowRight } from "lucide-react";
-import { getAllPosts, getAuthor } from "@/lib/blog-posts";
+import { getAllPosts } from "@/lib/blog-posts";
 
 const posts = getAllPosts();
 
@@ -27,9 +27,7 @@ export default function BlogPage() {
       <section className="pb-24">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {posts.map((post) => {
-              const author = getAuthor(post.authorId);
-              return (
+            {posts.map((post) => (
                 <Link
                   key={post.slug}
                   href={`/blog/${post.slug}`}
@@ -60,30 +58,12 @@ export default function BlogPage() {
                       {post.title}
                     </h2>
 
-                    <p className="text-sm text-zinc-400 mb-4 flex-grow line-clamp-3">
+                    <p className="text-sm text-zinc-400 flex-grow line-clamp-3">
                       {post.description}
                     </p>
-
-                    {/* Author */}
-                    {author && (
-                      <div className="flex items-center gap-3 pt-4 mt-auto border-t border-zinc-800">
-                        <Image
-                          src={author.image}
-                          alt={author.name}
-                          width={32}
-                          height={32}
-                          className="rounded-full"
-                        />
-                        <div>
-                          <span className="text-sm text-zinc-300">{author.name}</span>
-                          <span className="text-xs text-zinc-500 block">{author.role}</span>
-                        </div>
-                      </div>
-                    )}
                   </div>
                 </Link>
-              );
-            })}
+            ))}
           </div>
         </div>
       </section>
