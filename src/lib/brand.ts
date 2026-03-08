@@ -27,8 +27,8 @@ export const brand = {
 
   // [CUSTOMIZE] Hero section
   heroImage: "/img/HeroSection-CISO.jpg",
-  heroTitle: "Your Hero Headline Here",
-  heroSubtitle: "Your compelling hero subtitle that explains your value proposition to security leaders.",
+  heroTitle: "Securing Your Software, DevOps, and Agentic Workflows",
+  heroSubtitle: "You are the SecOps leader your organization trusts to thrive fearlessly in the age of AI. We're here to augment your superpowers as you bravely lead technical teams into this next tech cycle.",
 
 };
 
