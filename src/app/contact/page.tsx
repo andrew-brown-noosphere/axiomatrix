@@ -2,12 +2,22 @@
 
 import { useState, useRef } from "react";
 import Image from "next/image";
-import { Mail, Calendar, Play, Pause } from "lucide-react";
+import { Mail, Calendar, Play, Pause, CheckCircle, AlertCircle } from "lucide-react";
 import { brand } from "@/lib/brand";
 
 export default function ContactPage() {
   const [isPlaying, setIsPlaying] = useState(false);
   const videoRef = useRef<HTMLVideoElement>(null);
+
+  // Form state
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    company: "",
+    message: "",
+  });
+  const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
+  const [errorMessage, setErrorMessage] = useState("");
 
   const toggleVideo = () => {
     if (videoRef.current) {
@@ -22,6 +32,32 @@ export default function ContactPage() {
 
   const handleVideoEnd = () => {
     setIsPlaying(false);
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setStatus("loading");
+    setErrorMessage("");
+
+    try {
+      const response = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(formData),
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.error || "Failed to send message");
+      }
+
+      setStatus("success");
+      setFormData({ name: "", email: "", company: "", message: "" });
+    } catch (error) {
+      setStatus("error");
+      setErrorMessage(error instanceof Error ? error.message : "Something went wrong");
+    }
   };
 
   return (
@@ -54,7 +90,7 @@ export default function ContactPage() {
             <video
               ref={videoRef}
               className="w-full aspect-video bg-zinc-900"
-onEnded={handleVideoEnd}
+              onEnded={handleVideoEnd}
               playsInline
             >
               <source src="/video/ciso-testimonial.mp4" type="video/mp4" />
@@ -120,66 +156,99 @@ onEnded={handleVideoEnd}
             <div className="bg-zinc-900/50 border border-zinc-800 rounded-xl p-8">
               <h2 className="text-xl font-bold text-white mb-6">Send us a message</h2>
 
-              <form className="space-y-6">
-                <div>
-                  <label htmlFor="name" className="block text-sm font-medium text-zinc-300 mb-2">
-                    Name
-                  </label>
-                  <input
-                    type="text"
-                    id="name"
-                    name="name"
-                    className="w-full px-4 py-3 rounded-lg bg-zinc-800 border border-zinc-700 text-white placeholder-zinc-500 focus:outline-none focus:border-cyan-500"
-                    placeholder="Your name"
-                  />
+              {status === "success" ? (
+                <div className="flex flex-col items-center justify-center py-8 text-center">
+                  <CheckCircle className="h-12 w-12 text-green-500 mb-4" />
+                  <h3 className="text-lg font-semibold text-white mb-2">Message Sent!</h3>
+                  <p className="text-zinc-400">We'll get back to you soon.</p>
+                  <button
+                    onClick={() => setStatus("idle")}
+                    className="mt-4 text-cyan-400 hover:text-cyan-300"
+                  >
+                    Send another message
+                  </button>
                 </div>
+              ) : (
+                <form onSubmit={handleSubmit} className="space-y-6">
+                  {status === "error" && (
+                    <div className="flex items-center gap-2 p-3 rounded-lg bg-red-500/10 border border-red-500/20 text-red-400">
+                      <AlertCircle className="h-5 w-5 flex-shrink-0" />
+                      <p className="text-sm">{errorMessage}</p>
+                    </div>
+                  )}
 
-                <div>
-                  <label htmlFor="email" className="block text-sm font-medium text-zinc-300 mb-2">
-                    Email
-                  </label>
-                  <input
-                    type="email"
-                    id="email"
-                    name="email"
-                    className="w-full px-4 py-3 rounded-lg bg-zinc-800 border border-zinc-700 text-white placeholder-zinc-500 focus:outline-none focus:border-cyan-500"
-                    placeholder="you@company.com"
-                  />
-                </div>
+                  <div>
+                    <label htmlFor="name" className="block text-sm font-medium text-zinc-300 mb-2">
+                      Name *
+                    </label>
+                    <input
+                      type="text"
+                      id="name"
+                      name="name"
+                      required
+                      value={formData.name}
+                      onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                      className="w-full px-4 py-3 rounded-lg bg-zinc-800 border border-zinc-700 text-white placeholder-zinc-500 focus:outline-none focus:border-cyan-500"
+                      placeholder="Your name"
+                    />
+                  </div>
 
-                <div>
-                  <label htmlFor="company" className="block text-sm font-medium text-zinc-300 mb-2">
-                    Company
-                  </label>
-                  <input
-                    type="text"
-                    id="company"
-                    name="company"
-                    className="w-full px-4 py-3 rounded-lg bg-zinc-800 border border-zinc-700 text-white placeholder-zinc-500 focus:outline-none focus:border-cyan-500"
-                    placeholder="Your company"
-                  />
-                </div>
+                  <div>
+                    <label htmlFor="email" className="block text-sm font-medium text-zinc-300 mb-2">
+                      Email *
+                    </label>
+                    <input
+                      type="email"
+                      id="email"
+                      name="email"
+                      required
+                      value={formData.email}
+                      onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                      className="w-full px-4 py-3 rounded-lg bg-zinc-800 border border-zinc-700 text-white placeholder-zinc-500 focus:outline-none focus:border-cyan-500"
+                      placeholder="you@company.com"
+                    />
+                  </div>
 
-                <div>
-                  <label htmlFor="message" className="block text-sm font-medium text-zinc-300 mb-2">
-                    Message
-                  </label>
-                  <textarea
-                    id="message"
-                    name="message"
-                    rows={4}
-                    className="w-full px-4 py-3 rounded-lg bg-zinc-800 border border-zinc-700 text-white placeholder-zinc-500 focus:outline-none focus:border-cyan-500"
-                    placeholder="Tell us about your security challenges..."
-                  />
-                </div>
+                  <div>
+                    <label htmlFor="company" className="block text-sm font-medium text-zinc-300 mb-2">
+                      Company
+                    </label>
+                    <input
+                      type="text"
+                      id="company"
+                      name="company"
+                      value={formData.company}
+                      onChange={(e) => setFormData({ ...formData, company: e.target.value })}
+                      className="w-full px-4 py-3 rounded-lg bg-zinc-800 border border-zinc-700 text-white placeholder-zinc-500 focus:outline-none focus:border-cyan-500"
+                      placeholder="Your company"
+                    />
+                  </div>
 
-                <button
-                  type="submit"
-                  className="btn-chrome-primary w-full px-6 py-3 text-base font-semibold text-white rounded-lg"
-                >
-                  Send Message
-                </button>
-              </form>
+                  <div>
+                    <label htmlFor="message" className="block text-sm font-medium text-zinc-300 mb-2">
+                      Message *
+                    </label>
+                    <textarea
+                      id="message"
+                      name="message"
+                      rows={4}
+                      required
+                      value={formData.message}
+                      onChange={(e) => setFormData({ ...formData, message: e.target.value })}
+                      className="w-full px-4 py-3 rounded-lg bg-zinc-800 border border-zinc-700 text-white placeholder-zinc-500 focus:outline-none focus:border-cyan-500"
+                      placeholder="Tell us about your security challenges..."
+                    />
+                  </div>
+
+                  <button
+                    type="submit"
+                    disabled={status === "loading"}
+                    className="btn-chrome-primary w-full px-6 py-3 text-base font-semibold text-white rounded-lg disabled:opacity-50"
+                  >
+                    {status === "loading" ? "Sending..." : "Send Message"}
+                  </button>
+                </form>
+              )}
             </div>
           </div>
         </div>

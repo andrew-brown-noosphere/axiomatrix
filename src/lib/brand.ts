@@ -8,7 +8,7 @@ export const brand = {
   description: "Your company description for DevSecOps consulting services.",
 
   // [CUSTOMIZE] Contact info
-  email: "contact@yourdomain.com",
+  email: "andrew@voyant.io",
 
   // [CUSTOMIZE] Social links (leave empty string to hide)
   linkedin: "https://linkedin.com/company/yourbrand",
