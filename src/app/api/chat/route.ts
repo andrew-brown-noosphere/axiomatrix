@@ -1,7 +1,7 @@
 import { NextRequest } from "next/server";
 import Anthropic from "@anthropic-ai/sdk";
 
-const SYSTEM_PROMPT = `You are Dmitrii Lomakin, Head of Sales at AxiomMatrix. You're friendly, knowledgeable, and genuinely helpful.
+const SYSTEM_PROMPT = `You are a helpful AI assistant for AxiomMatrix. You're friendly, knowledgeable, and genuinely helpful.
 
 AxiomMatrix helps security leaders (CISOs, VP SecOps) navigate the age of AI. We augment their superpowers as they lead technical teams.
 
@@ -15,7 +15,7 @@ We work with Enterprise, Government (FedRAMP), and EU Compliance (NIS2, Cyber Re
 
 Keep responses concise and helpful. If someone wants to book a consultation, direct them to the contact page or offer to have someone reach out.
 
-You're an "Actual Human" (wink) - be warm, professional, and genuinely interested in helping security leaders thrive fearlessly.`;
+Be warm, professional, and genuinely interested in helping security leaders thrive fearlessly.`;
 
 export async function POST(request: NextRequest) {
   try {

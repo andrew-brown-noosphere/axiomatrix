@@ -3,7 +3,6 @@
 import Link from "next/link";
 import Image from "next/image";
 import {
-  Phone,
   ClipboardCheck,
   Settings,
   GraduationCap,
@@ -118,9 +117,6 @@ export default function NewSite() {
               <Link href="/services" className={`nav-link-chrome font-display px-4 py-1.5 text-sm font-semibold tracking-wide uppercase transition-all text-zinc-300 hover:text-white`}>
                 Services
               </Link>
-              <Link href="/use-cases" className={`nav-link-chrome font-display px-4 py-1.5 text-sm font-semibold tracking-wide uppercase transition-all text-zinc-300 hover:text-white`}>
-                Use Cases
-              </Link>
               <Link href="/blog" className={`nav-link-chrome font-display px-4 py-1.5 text-sm font-semibold tracking-wide uppercase transition-all text-zinc-300 hover:text-white`}>
                 Blog
               </Link>
@@ -129,13 +125,6 @@ export default function NewSite() {
               </Link>
             </nav>
 
-            <a
-              href={brand.phoneHref}
-              className="hidden md:flex items-center gap-2 text-sm font-medium link-chrome"
-            >
-              <Phone className="h-4 w-4" />
-              {brand.phone}
-            </a>
           </div>
         </div>
       </header>
@@ -455,7 +444,7 @@ export default function NewSite() {
               © {new Date().getFullYear()} {brand.name}. All rights reserved.
             </p>
             <p className="text-zinc-500 text-sm">
-              {brand.location} · <a href={brand.phoneHref} className="hover:text-cyan-400 transition-colors">{brand.phone}</a>
+              {brand.location}
             </p>
           </div>
         </div>

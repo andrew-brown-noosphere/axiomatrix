@@ -3,7 +3,7 @@
 import { usePathname } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
-import { Menu, Phone, Linkedin, Twitter, Mail } from "lucide-react";
+import { Menu, Linkedin, Twitter, Mail } from "lucide-react";
 import AIAssistant from "./AIAssistant";
 import { brand } from "@/lib/brand";
 
@@ -11,7 +11,6 @@ const navigation = [
   { name: "Home", href: "/" },
   { name: "About", href: "/about" },
   { name: "Services", href: "/services" },
-  { name: "Use Cases", href: "/use-cases" },
   { name: "Blog", href: "/blog" },
   { name: "Contact", href: "/contact", highlight: true },
 ];
@@ -66,15 +65,6 @@ export default function LayoutWrapper({
                 </Link>
               ))}
             </nav>
-
-            {/* Phone */}
-            <a
-              href={brand.phoneHref}
-              className="hidden md:flex items-center gap-2 link-chrome text-sm font-medium"
-            >
-              <Phone className="h-4 w-4" />
-              {brand.phone}
-            </a>
 
             {/* Mobile menu button */}
             <button className="md:hidden p-2 text-zinc-400 hover:text-white">
@@ -154,11 +144,6 @@ export default function LayoutWrapper({
                   </Link>
                 </li>
                 <li>
-                  <Link href="/use-cases" className="text-sm text-zinc-400 hover:text-cyan-400 transition-colors">
-                    Use Cases
-                  </Link>
-                </li>
-                <li>
                   <Link href="/blog" className="text-sm text-zinc-400 hover:text-cyan-400 transition-colors">
                     Blog
                   </Link>
@@ -208,7 +193,7 @@ export default function LayoutWrapper({
               <span>🇨🇦</span>
             </div>
             <p className="text-zinc-500 text-sm">
-              {brand.location} · <a href={brand.phoneHref} className="hover:text-cyan-400 transition-colors">{brand.phone}</a>
+              {brand.location}
             </p>
           </div>
         </div>

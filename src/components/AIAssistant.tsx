@@ -1,8 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import Image from "next/image";
-import { X, Send, MessageSquare, Sparkles } from "lucide-react";
+import { X, Send, MessageSquare, Sparkles, Bot } from "lucide-react";
 
 interface Message {
   role: "user" | "assistant";
@@ -14,7 +13,7 @@ export default function AIAssistant() {
   const [messages, setMessages] = useState<Message[]>([
     {
       role: "assistant",
-      content: "Hi. I'm Dmitrii Lomakin, Actual Human. How can I help?",
+      content: "Hi! I'm the AxiomMatrix assistant. How can I help you with DevSecOps?",
     },
   ]);
   const [input, setInput] = useState("");
@@ -112,20 +111,16 @@ export default function AIAssistant() {
           <div className="bg-gradient-to-r from-zinc-800 to-zinc-900 border-b border-zinc-700/50 p-4 flex items-center justify-between">
             <div className="flex items-center gap-3">
               <div className="relative">
-                <Image
-                  src="/img/people/dmitrii-avatar.jpg"
-                  alt="Dmitrii Lomakin"
-                  width={40}
-                  height={40}
-                  className="rounded-full shadow-lg shadow-cyan-500/20 object-cover"
-                />
+                <div className="w-10 h-10 rounded-full bg-gradient-to-br from-cyan-500 to-cyan-600 flex items-center justify-center shadow-lg shadow-cyan-500/20">
+                  <Bot className="h-5 w-5 text-white" />
+                </div>
                 <div className="absolute -bottom-0.5 -right-0.5 w-3 h-3 bg-green-500 rounded-full border-2 border-zinc-900" />
               </div>
               <div>
                 <h3 className="font-display font-semibold text-white text-sm">
-                  Dmitrii Lomakin
+                  AxiomMatrix
                 </h3>
-                <p className="text-xs text-zinc-400">Actual Human</p>
+                <p className="text-xs text-zinc-400">AI Assistant</p>
               </div>
             </div>
             <button
