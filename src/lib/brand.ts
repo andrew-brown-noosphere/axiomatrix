@@ -15,7 +15,7 @@ export const brand = {
   twitter: "https://twitter.com/yourbrand",
 
   // [CUSTOMIZE] Logo - replace with your logo file
-  logo: "/img/logo/bold-logo.jpg",
+  logo: "/img/logo/logo-AM.jpg",
   logoWidth: 44,
   logoHeight: 44,
   logoFooterWidth: 48,
