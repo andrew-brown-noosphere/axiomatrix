@@ -3,6 +3,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import {
+  MessageSquare,
   ClipboardCheck,
   Settings,
   GraduationCap,
@@ -21,7 +22,7 @@ import { brand } from "@/lib/brand";
 
 const services = [
   {
-    icon: Phone,
+    icon: MessageSquare,
     title: "Free Discovery Call",
     description:
       "Understand where you stand today and what it will take to strengthen your security posture.",
