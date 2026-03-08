@@ -353,21 +353,13 @@ export default function NewSite() {
                 Schedule a free discovery call. We&apos;ll assess your current security
                 challenges and show you the path forward.
               </p>
-              <div className="flex flex-col sm:flex-row gap-4 items-start sm:items-center">
-                <Link
-                  href="/contact"
-                  className="btn-chrome-primary inline-flex items-center justify-center gap-2 px-6 py-3 text-base font-semibold text-white rounded-lg"
-                >
-                  Book Your Personal Consultation
-                  <ArrowRight className="h-4 w-4" />
-                </Link>
-                <div className="flex items-center gap-2 text-zinc-400">
-                  <Phone className="h-4 w-4" />
-                  <a href="tel:+13142283004" className="link-chrome">
-                    +1 (314) 228-3004
-                  </a>
-                </div>
-              </div>
+              <Link
+                href="/contact"
+                className="btn-chrome-primary inline-flex items-center justify-center gap-2 px-6 py-3 text-base font-semibold text-white rounded-lg"
+              >
+                Book Your Personal Consultation
+                <ArrowRight className="h-4 w-4" />
+              </Link>
             </div>
           </div>
         </div>
