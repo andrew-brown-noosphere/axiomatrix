@@ -4,8 +4,8 @@ export const brand = {
   // [CUSTOMIZE] Company name and messaging
   name: "AxioMatrix",
   copyrightOwner: "Voyant, LLC", // Legal entity for copyright
-  tagline: "Your Tagline Here",
-  description: "Your company description for DevSecOps consulting services.",
+  tagline: "Securing the AI Era",
+  description: "Augmenting SecOps leaders as they navigate the age of AI.",
 
   // [CUSTOMIZE] Contact info
   email: "andrew@voyant.io",
