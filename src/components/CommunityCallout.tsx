@@ -131,7 +131,7 @@ export default function CommunityCallout({
             {!isComplete && (
               <span className="inline-block w-0.5 h-4 bg-orange-400 ml-0.5 animate-pulse" />
             )}
-            {isComplete && "&rdquo;"}
+            {isComplete && """}
           </p>
           <div className="flex items-center justify-between mt-3 pt-3 border-t border-orange-500/10">
             <p className="text-xs text-zinc-500 flex items-center gap-2">
@@ -172,7 +172,7 @@ export default function CommunityCallout({
             {!isComplete && (
               <span className="inline-block w-0.5 h-5 bg-orange-400 ml-1 animate-pulse" />
             )}
-            {isComplete && "&rdquo;"}
+            {isComplete && """}
           </blockquote>
 
           {/* Footer */}
@@ -225,7 +225,7 @@ export default function CommunityCallout({
               {!isComplete && (
                 <span className="inline-block w-0.5 h-4 bg-orange-400 ml-0.5 animate-pulse" />
               )}
-              {isComplete && "&rdquo;"}
+              {isComplete && """}
             </p>
             <div className="flex items-center gap-2 mt-3 pt-3 border-t border-zinc-800">
               <span className="text-xs text-orange-300">u/{thread.topComment.author}</span>
