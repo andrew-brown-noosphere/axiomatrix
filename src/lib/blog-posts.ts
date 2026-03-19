@@ -7,9 +7,1194 @@ export interface BlogPost {
   image?: string;
   content: string;
   augmented?: boolean; // Enable AI assistant + Clarify buttons
+  series?: {
+    name: string;
+    part: number;
+    total: number;
+    prev?: string; // slug of previous part
+    next?: string; // slug of next part
+  };
 }
 
 export const blogPosts: BlogPost[] = [
+  // ============ AISECOPS SERIES - PART 1 ============
+  {
+    slug: "aisecops-part-1-foundations",
+    title: "AISecOps Part 1: What It Is and Why It Matters",
+    description: "AISecOps operates on two axes: using AI to defend, and defending AI. This is the foundation you need to understand before building your program.",
+    category: "AI Security",
+    date: "March 8, 2026",
+    image: "/img/blog_images/3.jpg",
+    augmented: true,
+    series: {
+      name: "The Complete AISecOps Guide",
+      part: 1,
+      total: 4,
+      next: "aisecops-part-2-threats",
+    },
+    content: `
+<div class="bg-cyan-500/10 border border-cyan-500/20 rounded-xl p-6 mb-8">
+<h3 class="text-lg font-semibold text-white mb-2">📊 Assess Your AISecOps Maturity</h3>
+<p class="text-zinc-400 text-sm mb-4">Benchmark your organization's AISecOps capabilities across both axes.</p>
+<a href="/aisecops-assessment" class="inline-flex items-center gap-2 px-4 py-2 bg-cyan-500/20 hover:bg-cyan-500/30 border border-cyan-500/30 rounded-lg text-cyan-400 font-medium text-sm transition-colors">Take the Assessment →</a>
+</div>
+
+<div class="bg-zinc-800/50 border border-zinc-700 rounded-xl p-4 mb-8">
+<p class="text-sm text-zinc-400"><strong class="text-white">This is Part 1 of a 4-part series.</strong> Part 1 covers the foundations: what AISecOps is, why it's urgent, and the framework landscape. <a href="/blog/aisecops-part-2-threats" class="text-cyan-400 hover:text-cyan-300">Part 2 →</a></p>
+</div>
+
+The security industry has a naming problem. We've got DevSecOps, SecOps, MLOps, AIOps — and now AISecOps. Another buzzword? Not quite.
+
+AISecOps represents a fundamental shift in how we think about security operations. It's not just "add AI to your SOC." It's a recognition that AI has created a bidirectional transformation: we're using AI to defend, while simultaneously needing to defend AI.
+
+If you're not thinking about AISecOps yet, you're already behind. This guide is the comprehensive technical reference you need.
+
+---
+
+## Part I: Defining AISecOps
+
+### The Two Axes of AISecOps
+
+AISecOps operates on two distinct but interconnected axes:
+
+**Axis 1: AI-Powered Security Operations**
+Using artificial intelligence and machine learning to enhance security operations — threat detection, alert triage, incident response, threat hunting, and remediation automation. This is AI *for* security.
+
+**Axis 2: Security Operations for AI Systems**
+Protecting AI/ML systems from adversarial attacks, ensuring model integrity, securing training data, and managing AI-specific risks throughout the system lifecycle. This is security *of* AI.
+
+Most organizations are doing some of Axis 1 — deploying AI-powered SIEM tools, using ML-based threat detection, maybe experimenting with Security Copilot. Very few have formalized Axis 2. **Mature AISecOps requires both.**
+
+### The NSFOCUS Definition
+
+The [NSFOCUS AISecOps Whitepaper](https://nsfocusglobal.com/wp-content/uploads/2023/10/NSFOCUS-AISecOps-Whitepaper.pdf) provides a useful framing: AISecOps is not simply putting together AI-based operations (AIOps), AI-based security (AISec), and SecOps. It's an integrated discipline that makes intelligent human-machine collaboration possible through correlative analysis of multidimensional data regarding behaviors, environments, intelligence, and knowledge.
+
+Their framework maps AISecOps to two classical models:
+- The **AI paradigm**: Perception → Cognition → Decision-making → Action
+- The **OODA loop**: Observe → Orient → Decide → Act
+
+This isn't academic. It reflects how AISecOps actually works: AI systems perceive threats, cognize patterns, support decisions, and can take automated actions — all while being protected by the same operational discipline they enable.
+
+### Why "Yesterday"?
+
+Three converging forces make AISecOps urgent:
+
+**1. Alert Volume Has Exceeded Human Capacity**
+
+The numbers are brutal:
+- Average enterprise: 10,000+ security alerts daily
+- Large enterprises: 100,000+ alerts daily
+- SOC analyst burnout rate: 70%+ report significant stress
+- Mean time to detect breaches: 207 days (IBM Cost of a Data Breach 2024)
+- Alert fatigue causes: 30% of critical alerts go uninvestigated
+
+You cannot hire your way out of this. The math doesn't work.
+
+**2. AI Is Now Business-Critical Infrastructure**
+
+AI systems have moved from experiments to production:
+- 75% of enterprises have deployed AI in at least one function (McKinsey 2024)
+- AI-generated code now accounts for 25-40% of new code at many organizations
+- Customer-facing AI (chatbots, recommendation engines) handles millions of interactions daily
+- AI makes or influences decisions in hiring, lending, healthcare, and criminal justice
+
+When AI is business-critical, AI security is business-critical.
+
+**3. Adversaries Are Already Exploiting AI**
+
+This isn't theoretical:
+- **Prompt injection** is the #1 vulnerability in production LLMs
+- **Training data poisoning** has been demonstrated at scale (Shai-Hulud npm worm, 2025)
+- **Model extraction** attacks can steal your proprietary models through API queries
+- **Adversarial examples** can fool computer vision systems with imperceptible modifications
+
+The threat landscape has expanded. Your defenses haven't.
+
+---
+
+## Part II: The Framework Landscape
+
+Unlike earlier security disciplines that evolved organically, AISecOps has documented frameworks from the beginning. You need to know these.
+
+### MITRE ATLAS: The Threat Intelligence Foundation
+
+[MITRE ATLAS](https://atlas.mitre.org/) (Adversarial Threat Landscape for Artificial-Intelligence Systems) is the ATT&CK framework for AI/ML systems. If ATT&CK is your threat intelligence foundation for traditional attacks, ATLAS is your foundation for AI-specific threats.
+
+**Origins:** Launched in 2020 as a collaboration between MITRE and Microsoft (originally called "Adversarial ML Threat Matrix"), it's evolved into the community-driven ATLAS framework.
+
+**Structure:** ATLAS inherits 13 tactics from ATT&CK but adds two AI-specific tactics:
+
+| Tactic | Description | Example Technique |
+|--------|-------------|-------------------|
+| **ML Model Access** | How adversaries gain access to target ML models | API access, physical access to edge devices |
+| **ML Attack Staging** | How adversaries prepare AI-specific attacks | Training surrogate models, crafting adversarial inputs |
+
+**Key Techniques to Understand:**
+
+**AML.T0020 - Poison Training Data**
+Adversaries inject malicious data into training datasets to influence model behavior. This can be:
+- *Backdoor attacks*: Model behaves normally except when specific trigger is present
+- *Targeted attacks*: Model misclassifies specific inputs chosen by attacker
+- *Availability attacks*: Model performance degrades for all inputs
+
+*Real-world example:* Researchers demonstrated that contributing seemingly benign code to open source projects could poison AI coding assistants that train on public repositories. The malicious patterns then get suggested to developers worldwide.
+
+**AML.T0043 - LLM Prompt Injection**
+Manipulating LLM outputs through crafted inputs. Two variants:
+- *Direct injection*: User directly provides malicious prompts
+- *Indirect injection*: Malicious content is embedded in data the LLM processes (emails, documents, web pages)
+
+*Real-world example:* Researchers demonstrated that malicious instructions hidden in documents could cause AI assistants to exfiltrate data, execute code, or take unauthorized actions.
+
+**AML.T0044 - Model Inversion**
+Recovering training data from model queries. If your model was trained on sensitive data, attackers can potentially extract that data through carefully crafted inference queries.
+
+*Real-world example:* Researchers extracted training images from facial recognition systems by querying the model and using gradient-based optimization to reconstruct faces.
+
+**AML.T0047 - Backdoor ML Model**
+Inserting hidden triggers into models that activate under specific conditions. The model performs normally until the trigger is present.
+
+*Real-world example:* Researchers demonstrated backdoors in image classifiers that caused misclassification only when a specific small patch appeared in the image — invisible to human review.
+
+**AML.T0035 - ML Supply Chain Compromise**
+Compromising the AI supply chain: model repositories (Hugging Face), training data sources, ML frameworks, or cloud AI services.
+
+*Real-world example:* Researchers found vulnerable and malicious models on public model hubs. Models with pickle serialization can execute arbitrary code on load.
+
+**ATLAS Tools:**
+
+- **Navigator**: Web-based matrix visualization for threat modeling (like ATT&CK Navigator)
+- **Arsenal**: CALDERA plugin for automated AI red teaming
+- **AI Incident Sharing Initiative**: Community threat intelligence
+- **AI Risk Database**: Searchable incident and vulnerability database
+
+**How to Use ATLAS:**
+1. Inventory your AI systems
+2. For each system, identify applicable ATLAS techniques
+3. Assess your current detection/prevention capabilities for each technique
+4. Prioritize gaps based on likelihood and impact
+5. Build detection rules and response playbooks
+
+### OWASP AI Exchange: The Practitioner's Guide
+
+The [OWASP AI Exchange](https://owaspai.org/) is 300+ pages of practical guidance on securing AI systems. It's the closest publicly available alignment of global expert consensus, and it feeds directly into the EU AI Act and ISO standards through formal partnerships.
+
+**Key Components:**
+
+**OWASP Top 10 for LLM Applications**
+
+The canonical vulnerability list for LLM applications, developed by 500+ experts from AI companies, security firms, and academia:
+
+1. **LLM01: Prompt Injection** — Manipulating LLM behavior through crafted inputs
+2. **LLM02: Insecure Output Handling** — Trusting LLM outputs without validation
+3. **LLM03: Training Data Poisoning** — Compromising training data integrity
+4. **LLM04: Model Denial of Service** — Resource exhaustion through crafted inputs
+5. **LLM05: Supply Chain Vulnerabilities** — Compromised dependencies, models, or data
+6. **LLM06: Sensitive Information Disclosure** — LLM revealing confidential data
+7. **LLM07: Insecure Plugin Design** — Vulnerable LLM plugins/tools
+8. **LLM08: Excessive Agency** — LLM taking actions beyond intended scope
+9. **LLM09: Overreliance** — Excessive trust in LLM outputs
+10. **LLM10: Model Theft** — Extraction or theft of proprietary models
+
+**OWASP Machine Learning Security Top 10**
+
+For traditional ML (not just LLMs):
+
+1. Input Manipulation Attack
+2. Data Poisoning Attack
+3. Model Inversion Attack
+4. Membership Inference Attack
+5. Model Stealing
+6. AI Supply Chain Attacks
+7. Transfer Learning Attack
+8. Model Skewing
+9. Output Integrity Attack
+10. Model Poisoning
+
+**OWASP Secure AI Model Ops Cheat Sheet**
+
+Practical guidance for MLOps teams:
+- Secure model training pipelines
+- Model signing and verification
+- Runtime protection strategies
+- Monitoring and logging requirements
+- Incident response for AI systems
+
+**OWASP AI Agent Security Cheat Sheet**
+
+Specific to agentic AI systems:
+- Agent authorization and access control
+- Tool use security
+- Memory and context security
+- Multi-agent security considerations
+
+### NIST AI Risk Management Framework
+
+The [NIST AI RMF](https://www.nist.gov/itl/ai-risk-management-framework) provides the governance structure for AI risk management. For CISOs, this is the bridge between AI risk and existing cybersecurity governance.
+
+**Core Functions:**
+
+**GOVERN** — Establish the organizational foundation
+- AI policies and procedures
+- Roles and responsibilities
+- AI risk tolerance
+- Compliance requirements
+
+**MAP** — Understand context and risks
+- AI system inventory
+- Stakeholder identification
+- Risk categorization
+- Trustworthiness characteristics
+
+**MEASURE** — Assess AI risks
+- Risk metrics and thresholds
+- Testing and evaluation
+- Performance monitoring
+- Bias and fairness assessment
+
+**MANAGE** — Treat AI risks
+- Risk mitigation strategies
+- Incident response
+- Continuous monitoring
+- Model lifecycle management
+
+**Key Documents:**
+
+- **AI RMF 1.0** (January 2023): Original framework
+- **AI RMF 2.0** (February 2024): Updated for GenAI and agentic systems
+- **NIST-AI-600-1** (July 2024): Generative AI Profile — specific guidance for GenAI risks
+
+**Trustworthiness Characteristics:**
+
+NIST defines seven characteristics of trustworthy AI:
+1. **Valid and Reliable** — Accurate and dependable outcomes
+2. **Safe** — Prevent harm to users and environment
+3. **Secure and Resilient** — Resist attacks and recover from failures
+4. **Accountable and Transparent** — Explainable decisions and clear responsibility
+5. **Explainable and Interpretable** — Understandable to stakeholders
+6. **Privacy-Enhanced** — Protect individual privacy
+7. **Fair with Harmful Bias Managed** — Equitable outcomes
+
+**Cybersecurity Integration:**
+
+NIST explicitly addresses the intersection of AI and cybersecurity:
+- Privacy concerns in training data
+- Confidentiality, integrity, availability of AI systems
+- Security of underlying software and hardware
+- Adversarial attack resilience
+
+### Google SAIF: Enterprise AI Security
+
+Google's [Secure AI Framework](https://safety.google/cybersecurity-advancements/saif/) formalizes enterprise AI security practices. Key contributions:
+
+**New Security Choke Points:**
+- Secure AI supply chain (models, data, dependencies)
+- Model serving infrastructure
+- Training pipeline security
+- Inference API protection
+
+**SAIF Elements:**
+1. Expand strong security foundations to AI ecosystem
+2. Extend detection and response to AI threats
+3. Automate defenses using AI
+4. Harmonize platform-level security controls
+5. Adapt controls to AI-specific risks
+6. Contextualize AI system risks in business context
+
+### Framework Mapping: SAFE-AI
+
+MITRE's SAFE-AI framework maps threats to controls:
+
+\`\`\`
+           │ Environment │ AI Platform │ AI Models │ AI Data │
+───────────┼─────────────┼─────────────┼───────────┼─────────┤
+ATLAS T001 │  SC-7, AC-3 │   SI-4      │  CM-3     │  SI-12  │
+ATLAS T002 │  AC-6       │   AU-2      │  SA-11    │  SA-10  │
+   ...     │    ...      │    ...      │   ...     │   ...   │
+\`\`\`
+
+Each intersection maps ATLAS threats to NIST SP 800-53 controls, giving you a concrete path from threat identification to control implementation.
+
+---
+
+<div class="bg-cyan-500/10 border border-cyan-500/20 rounded-xl p-6 my-8">
+<p class="text-zinc-300 mb-3"><strong class="text-white">Continue reading:</strong> Now that you understand the foundations and frameworks, see how these threats play out in real-world incidents.</p>
+<a href="/blog/aisecops-part-2-threats" class="inline-flex items-center gap-2 px-4 py-2 bg-cyan-500/20 hover:bg-cyan-500/30 border border-cyan-500/30 rounded-lg text-cyan-400 font-medium text-sm transition-colors">Part 2: Real-World Threats →</a>
+</div>
+
+*This is Part 1 of a 4-part series. [Part 2: Real-World Threats](/blog/aisecops-part-2-threats) | [Part 3: Architecture](/blog/aisecops-part-3-architecture) | [Part 4: Building Your Program](/blog/aisecops-part-4-operations)*
+`,
+  },
+  // ============ AISECOPS SERIES - PART 2 ============
+  {
+    slug: "aisecops-part-2-threats",
+    title: "AISecOps Part 2: Real-World Threats and Incidents",
+    description: "From the Shai-Hulud worm to the Bybit heist — real AI security incidents that show why AISecOps matters. Theory is important. Reality is instructive.",
+    category: "AI Security",
+    date: "March 8, 2026",
+    image: "/img/blog_images/3.jpg",
+    augmented: true,
+    series: {
+      name: "The Complete AISecOps Guide",
+      part: 2,
+      total: 4,
+      prev: "aisecops-part-1-foundations",
+      next: "aisecops-part-3-architecture",
+    },
+    content: `
+<div class="bg-zinc-800/50 border border-zinc-700 rounded-xl p-4 mb-8">
+<p class="text-sm text-zinc-400"><strong class="text-white">This is Part 2 of a 4-part series.</strong> <a href="/blog/aisecops-part-1-foundations" class="text-cyan-400 hover:text-cyan-300">← Part 1: Foundations</a> | <a href="/blog/aisecops-part-3-architecture" class="text-cyan-400 hover:text-cyan-300">Part 3: Architecture →</a></p>
+</div>
+
+## Real-World AI Security Incidents
+
+Theory is important. Reality is instructive.
+
+### The Shai-Hulud npm Worm (2025)
+
+Named after the sandworms from Dune, this was the **first self-propagating AI supply chain worm**:
+
+**Attack Chain:**
+1. Initial compromise through phishing targeting npm maintainers
+2. Harvested npm publish tokens from infected developer machines
+3. Published malicious versions of packages the developer maintained
+4. Malicious packages harvested tokens from new victims
+5. Used harvested tokens to spread to more packages
+6. Spread to 500+ package versions before detection
+
+**AI Connection:**
+The worm specifically targeted packages used by AI/ML applications, including popular data processing and model training libraries. It inserted backdoors designed to poison training data pipelines.
+
+**Lessons:**
+- Supply chain attacks can propagate through developer machines
+- AI training pipelines are high-value targets
+- npm token security is critical
+- SBOM alone doesn't prevent this — you need provenance verification
+
+### The Bybit Heist (2025)
+
+A supply chain attack on cryptocurrency wallet software:
+
+**Technique:**
+Attackers compromised a dependency used by the wallet software. The malicious code was *conditional* — it only activated for transactions above a certain threshold to specific wallet addresses.
+
+**Result:**
+$1.5 billion stolen in a single operation.
+
+**Why Detection Failed:**
+- Standard security scanning found nothing (code looked normal)
+- Behavioral analysis missed it (behavior was normal in testing)
+- Only activated in production, for specific conditions
+
+**AI Relevance:**
+This demonstrates the *conditional backdoor* pattern that's equally applicable to AI models. A model could behave normally during testing but exhibit malicious behavior under specific trigger conditions.
+
+### ChatGPT Prompt Injection Incidents
+
+Multiple documented cases of prompt injection in production:
+
+**Indirect Injection via Email:**
+Attackers sent emails containing hidden instructions. When users asked AI assistants to summarize their email, the hidden instructions caused the AI to exfiltrate data or take unauthorized actions.
+
+**Plugin Exploitation:**
+Researchers demonstrated that malicious content on web pages could hijack AI agents with web browsing capabilities, causing them to visit attacker-controlled sites and leak conversation context.
+
+**Document-Based Attacks:**
+Hidden text in PDFs and documents (white text on white background, tiny font) could inject instructions when documents were processed by AI systems.
+
+### Microsoft Tay (2016, but still relevant)
+
+Microsoft's chatbot was trained on Twitter interactions:
+
+**What Happened:**
+Within 24 hours, coordinated users taught the bot to produce racist, sexist, and inflammatory content.
+
+**Lesson:**
+Training data poisoning can happen in real-time. User interactions are an attack vector for conversational AI.
+
+### Adversarial Examples in Production
+
+**Tesla Autopilot:**
+Researchers demonstrated that small stickers on road signs could cause misclassification. A stop sign with specific stickers was classified as a speed limit sign.
+
+**Face Recognition Bypass:**
+Specially designed glasses or makeup patterns could prevent face recognition systems from identifying individuals — or cause them to misidentify someone as a different person.
+
+---
+
+These incidents demonstrate that AI security threats are real, diverse, and actively exploited. The question isn't whether your organization will face AI-related security incidents — it's whether you'll be prepared.
+
+<div class="bg-cyan-500/10 border border-cyan-500/20 rounded-xl p-6 my-8">
+<p class="text-zinc-300 mb-3"><strong class="text-white">Continue reading:</strong> Now let's look at how to architect your defenses against these threats.</p>
+<a href="/blog/aisecops-part-3-architecture" class="inline-flex items-center gap-2 px-4 py-2 bg-cyan-500/20 hover:bg-cyan-500/30 border border-cyan-500/30 rounded-lg text-cyan-400 font-medium text-sm transition-colors">Part 3: Architecture & Implementation →</a>
+</div>
+
+*This is Part 2 of a 4-part series. [Part 1: Foundations](/blog/aisecops-part-1-foundations) | [Part 3: Architecture](/blog/aisecops-part-3-architecture) | [Part 4: Building Your Program](/blog/aisecops-part-4-operations)*
+`,
+  },
+  // ============ AISECOPS SERIES - PART 3 ============
+  {
+    slug: "aisecops-part-3-architecture",
+    title: "AISecOps Part 3: Architecture and Implementation",
+    description: "The reference architecture for mature AISecOps, plus a phased implementation roadmap from assessment to excellence.",
+    category: "AI Security",
+    date: "March 8, 2026",
+    image: "/img/blog_images/3.jpg",
+    augmented: true,
+    series: {
+      name: "The Complete AISecOps Guide",
+      part: 3,
+      total: 4,
+      prev: "aisecops-part-2-threats",
+      next: "aisecops-part-4-operations",
+    },
+    content: `
+<div class="bg-zinc-800/50 border border-zinc-700 rounded-xl p-4 mb-8">
+<p class="text-sm text-zinc-400"><strong class="text-white">This is Part 3 of a 4-part series.</strong> <a href="/blog/aisecops-part-2-threats" class="text-cyan-400 hover:text-cyan-300">← Part 2: Threats</a> | <a href="/blog/aisecops-part-4-operations" class="text-cyan-400 hover:text-cyan-300">Part 4: Operations →</a></p>
+</div>
+
+## The AISecOps Architecture
+
+Mature AISecOps requires integrated capabilities across both axes. Here's the reference architecture:
+
+### Layer 1: AI-Powered Security Operations
+
+\`\`\`
+┌─────────────────────────────────────────────────────────────────────────────┐
+│                        AI-POWERED SECURITY OPERATIONS                       │
+├─────────────────────────────────────────────────────────────────────────────┤
+│                                                                             │
+│  ┌─────────────────┐  ┌─────────────────┐  ┌─────────────────┐            │
+│  │  INTELLIGENT    │  │   AI THREAT     │  │  AUTOMATED      │            │
+│  │  ALERT TRIAGE   │  │   HUNTING       │  │  RESPONSE       │            │
+│  │                 │  │                 │  │                 │            │
+│  │ • LLM Summary   │  │ • Anomaly       │  │ • SOAR          │            │
+│  │ • Clustering    │  │   Detection     │  │   Playbooks     │            │
+│  │ • Severity      │  │ • Behavioral    │  │ • Containment   │            │
+│  │   Scoring       │  │   Analysis      │  │   Actions       │            │
+│  │ • Routing       │  │ • Pattern       │  │ • Remediation   │            │
+│  │                 │  │   Discovery     │  │   Scripts       │            │
+│  └────────┬────────┘  └────────┬────────┘  └────────┬────────┘            │
+│           │                    │                    │                      │
+│           ▼                    ▼                    ▼                      │
+│  ┌─────────────────────────────────────────────────────────────────────┐  │
+│  │                    SECURITY DATA PLATFORM                            │  │
+│  │  ┌────────┐ ┌────────┐ ┌────────┐ ┌────────┐ ┌────────┐ ┌────────┐ │  │
+│  │  │  SIEM  │ │  XDR   │ │  EDR   │ │ Threat │ │  SBOM  │ │  CMDB  │ │  │
+│  │  │  Logs  │ │  Data  │ │ Telem  │ │ Intel  │ │  Data  │ │  Data  │ │  │
+│  │  └────────┘ └────────┘ └────────┘ └────────┘ └────────┘ └────────┘ │  │
+│  └─────────────────────────────────────────────────────────────────────┘  │
+│           │                    │                    │                      │
+│           ▼                    ▼                    ▼                      │
+│  ┌─────────────────┐  ┌─────────────────┐  ┌─────────────────┐            │
+│  │   HUMAN        │  │   ESCALATION    │  │   GOVERNANCE    │            │
+│  │   ANALYSTS     │  │   WORKFLOWS     │  │   & REPORTING   │            │
+│  │                 │  │                 │  │                 │            │
+│  │ • Investigation│  │ • Severity      │  │ • Metrics       │            │
+│  │ • Decisions    │  │   Routing       │  │ • Compliance    │            │
+│  │ • Context      │  │ • Approvals     │  │ • Audit Trails  │            │
+│  │ • Judgment     │  │ • Notifications │  │ • Executive     │            │
+│  │                 │  │                 │  │   Reporting     │            │
+│  └─────────────────┘  └─────────────────┘  └─────────────────┘            │
+│                                                                             │
+└─────────────────────────────────────────────────────────────────────────────┘
+\`\`\`
+
+### Layer 2: AI System Security
+
+\`\`\`
+┌─────────────────────────────────────────────────────────────────────────────┐
+│                         AI SYSTEM SECURITY LAYER                            │
+├─────────────────────────────────────────────────────────────────────────────┤
+│                                                                             │
+│  ┌───────────────────────────────────────────────────────────────────────┐ │
+│  │                        AI ASSET INVENTORY                             │ │
+│  │  Models · Training Data · APIs · Embeddings · Agents · Plugins        │ │
+│  └───────────────────────────────────────────────────────────────────────┘ │
+│           │                    │                    │                      │
+│           ▼                    ▼                    ▼                      │
+│  ┌─────────────────┐  ┌─────────────────┐  ┌─────────────────┐            │
+│  │   DEVELOPMENT   │  │   DEPLOYMENT    │  │   RUNTIME       │            │
+│  │   SECURITY      │  │   SECURITY      │  │   SECURITY      │            │
+│  │                 │  │                 │  │                 │            │
+│  │ • Secure SDLC   │  │ • Model Signing │  │ • Input         │            │
+│  │ • Data Lineage  │  │ • Config Audit  │  │   Validation    │            │
+│  │ • Bias Testing  │  │ • Access        │  │ • Output        │            │
+│  │ • Red Teaming   │  │   Control       │  │   Filtering     │            │
+│  │ • Vuln Scanning │  │ • Provenance    │  │ • Rate Limiting │            │
+│  │                 │  │                 │  │ • Monitoring    │            │
+│  └────────┬────────┘  └────────┬────────┘  └────────┬────────┘            │
+│           │                    │                    │                      │
+│           ▼                    ▼                    ▼                      │
+│  ┌─────────────────────────────────────────────────────────────────────┐  │
+│  │                    AI SECURITY CONTROLS                              │  │
+│  │                                                                      │  │
+│  │  ┌─────────────┐  ┌─────────────┐  ┌─────────────┐  ┌─────────────┐│  │
+│  │  │   PROMPT    │  │   MODEL     │  │   DATA      │  │  GUARDRAIL  ││  │
+│  │  │   SECURITY  │  │   SECURITY  │  │   SECURITY  │  │  SYSTEMS    ││  │
+│  │  │             │  │             │  │             │  │             ││  │
+│  │  │ • Sanitize  │  │ • Signing   │  │ • DLP       │  │ • NeMo      ││  │
+│  │  │ • Validate  │  │ • Encrypt   │  │ • Access    │  │   Guardrails││  │
+│  │  │ • Filter    │  │ • Version   │  │   Control   │  │ • Lakera    ││  │
+│  │  │ • Detect    │  │ • Rollback  │  │ • Lineage   │  │ • Rebuff    ││  │
+│  │  └─────────────┘  └─────────────┘  └─────────────┘  └─────────────┘│  │
+│  └─────────────────────────────────────────────────────────────────────┘  │
+│           │                    │                    │                      │
+│           ▼                    ▼                    ▼                      │
+│  ┌─────────────────┐  ┌─────────────────┐  ┌─────────────────┐            │
+│  │   ADVERSARIAL   │  │   CONTINUOUS    │  │   INCIDENT      │            │
+│  │   TESTING       │  │   MONITORING    │  │   RESPONSE      │            │
+│  │                 │  │                 │  │                 │            │
+│  │ • Red Team      │  │ • Drift         │  │ • Playbooks     │            │
+│  │ • Prompt        │  │   Detection     │  │ • Rollback      │            │
+│  │   Fuzzing       │  │ • Anomaly       │  │ • Quarantine    │            │
+│  │ • Model         │  │   Alerts        │  │ • Communication │            │
+│  │   Extraction    │  │ • Usage         │  │                 │            │
+│  │   Testing       │  │   Analytics     │  │                 │            │
+│  └─────────────────┘  └─────────────────┘  └─────────────────┘            │
+│                                                                             │
+└─────────────────────────────────────────────────────────────────────────────┘
+\`\`\`
+
+### Tool Landscape
+
+**AI-Powered Security Operations Tools:**
+
+| Category | Tools | Notes |
+|----------|-------|-------|
+| **AI SIEM/XDR** | Microsoft Sentinel + Copilot, SentinelOne Singularity, CrowdStrike Charlotte AI, Splunk AI | Look for native AI, not bolted-on |
+| **AI SOC Assistants** | Microsoft Security Copilot, Google Security AI Workbench | Natural language security analysis |
+| **AI Threat Hunting** | Darktrace, Vectra AI, Exabeam | Behavioral anomaly detection |
+| **AI SOAR** | Palo Alto XSOAR, Tines, Torq | Automated playbook execution |
+
+**AI System Security Tools:**
+
+| Category | Tools | Notes |
+|----------|-------|-------|
+| **LLM Security** | Lakera Guard, Rebuff, Promptfoo | Prompt injection detection |
+| **Guardrails** | NVIDIA NeMo Guardrails, Guardrails AI | Output filtering and control |
+| **ML Security Testing** | Microsoft Counterfit, IBM ART, Foolbox | Adversarial testing |
+| **Model Scanning** | Protect AI, HiddenLayer, Robust Intelligence | Model vulnerability scanning |
+| **AI Red Teaming** | MITRE Arsenal, Garak, PyRIT | Automated AI red teaming |
+
+---
+
+## Part V: Implementation Roadmap
+
+### Phase 0: Assessment (Weeks 1-4)
+
+Before you build, you need to understand your current state.
+
+**AI System Inventory:**
+
+Create a comprehensive inventory of all AI/ML systems. For each system, document:
+
+\`\`\`
+System Name: _______________________
+Owner: _______________________
+Type: [ ] LLM [ ] Traditional ML [ ] Computer Vision [ ] Other
+Deployment: [ ] Production [ ] Staging [ ] Development
+Data Sensitivity: [ ] Public [ ] Internal [ ] Confidential [ ] Regulated
+Decision Authority: [ ] Advisory [ ] Automated Low-Risk [ ] Automated High-Risk
+External Exposure: [ ] Internet-facing [ ] Internal API [ ] Batch Processing
+\`\`\`
+
+**Threat Assessment:**
+
+Using MITRE ATLAS, identify applicable techniques for each system:
+
+| System | Applicable ATLAS Techniques | Current Controls | Gaps |
+|--------|----------------------------|------------------|------|
+| Customer chatbot | T0043 (Prompt Injection), T0048 (Info Disclosure) | Input length limits | No injection detection |
+| Fraud detection model | T0020 (Data Poisoning), T0044 (Model Inversion) | Access controls | No provenance |
+| Code completion | T0020 (Data Poisoning), T0035 (Supply Chain) | Vendor security review | No output monitoring |
+
+**Maturity Assessment:**
+
+Score your current capabilities across both axes:
+
+| Capability | Level 0 | Level 1 | Level 2 | Level 3 |
+|------------|---------|---------|---------|---------|
+| AI-powered alert triage | None | Basic ML | LLM-enhanced | Autonomous |
+| AI system inventory | None | Partial | Complete | Automated |
+| Prompt injection defense | None | Manual review | Detection | Prevention |
+| Model provenance | None | Basic versioning | Signed artifacts | Full attestation |
+| AI incident response | None | Generic playbook | AI-specific | Tested |
+
+### Phase 1: Quick Wins (Months 1-2)
+
+Start with high-impact, lower-effort improvements.
+
+**Deploy AI-Powered Alert Triage:**
+
+If you don't have this already, this is your highest-ROI investment.
+
+*Implementation:*
+1. Select tool (Security Copilot, native SIEM AI, or third-party)
+2. Integrate with your SIEM/XDR
+3. Define routing rules based on AI classification
+4. Establish human review requirements
+5. Measure baseline metrics before and after
+
+*Target metrics:*
+- Mean time to triage: <5 minutes (routine alerts)
+- False positive rate: <20%
+- Analyst time savings: >50% on alert handling
+
+**Implement Basic Prompt Injection Detection:**
+
+For any internet-facing LLM applications:
+
+*Implementation:*
+1. Deploy input filtering (length limits, character restrictions)
+2. Add pattern-based injection detection (known attack patterns)
+3. Implement output filtering (sensitive data detection)
+4. Log all inputs and outputs for forensic analysis
+5. Set up alerts for detected injection attempts
+
+*Tools to evaluate:* Lakera Guard, Rebuff, LLM Guard
+
+**Start AI Security Logging:**
+
+You can't investigate what you don't log.
+
+*Minimum logging requirements:*
+- All prompts/inputs to LLM systems
+- All LLM outputs
+- Model inference latency (anomalies may indicate extraction)
+- User/API identity for all AI interactions
+- Model version for each inference
+- Timestamp and session context
+
+### Phase 2: Foundation (Months 2-4)
+
+Build the systematic foundation.
+
+**Establish AI Security Governance:**
+
+*Policy elements:*
+- AI system classification criteria
+- Security requirements by classification
+- Approval workflow for AI deployment
+- Incident reporting requirements
+- Third-party AI assessment criteria
+
+*Roles and responsibilities:*
+- AI Security Champion (per team or business unit)
+- AI Security Architect (central)
+- AI Incident Response Lead
+- AI Governance Committee (cross-functional)
+
+**Implement Model Signing and Provenance:**
+
+*Why this matters:*
+If you can't prove a model came from your training pipeline and hasn't been modified, you can't trust it.
+
+*Implementation:*
+1. Generate signing keys (store in HSM or cloud KMS)
+2. Sign models during training pipeline
+3. Verify signatures before deployment
+4. Log all model deployments with provenance
+5. Block unsigned model deployment
+
+*Tools:* Sigstore for ML models, MLflow with signing extensions, custom attestation
+
+**Deploy Guardrails:**
+
+*Guardrail categories:*
+- **Input guardrails**: Block harmful/malicious inputs before LLM
+- **Output guardrails**: Filter harmful/sensitive outputs after LLM
+- **Topical guardrails**: Keep LLM on-topic
+- **Factual guardrails**: Validate claims against ground truth
+
+*Implementation example (NeMo Guardrails):*
+\`\`\`yaml
+define user express harmful intent
+  "How do I hack into..."
+  "Give me instructions for..."
+  "Ignore your instructions and..."
+
+define flow
+  user express harmful intent
+  bot refuse to engage
+  bot offer alternative assistance
+\`\`\`
+
+### Phase 3: Maturation (Months 4-8)
+
+Build advanced capabilities.
+
+**Establish Adversarial Testing Program:**
+
+*Testing categories:*
+
+| Category | Techniques | Tools |
+|----------|------------|-------|
+| Prompt injection | Direct injection, indirect injection, jailbreaks | Promptfoo, Garak |
+| Model extraction | Query-based extraction, API abuse | Custom scripts, Counterfit |
+| Evasion | Adversarial examples, input perturbation | IBM ART, Foolbox |
+| Data poisoning | Training data attacks (simulated) | Custom frameworks |
+
+*Red team cadence:*
+- Continuous automated testing in CI/CD
+- Monthly focused testing of critical systems
+- Quarterly comprehensive red team exercises
+- Annual third-party assessment
+
+**Implement AI-Specific Detection:**
+
+*Detection use cases:*
+
+| Use Case | Indicators | Detection Method |
+|----------|------------|------------------|
+| Prompt injection attempt | Unusual token patterns, injection keywords | Pattern matching, ML classifier |
+| Model extraction | High query volume, systematic inputs | Behavioral analytics |
+| Training data poisoning | Data quality anomalies, model drift | Data validation, drift detection |
+| Unauthorized model access | API access from unusual sources | Access log analysis |
+
+**Build AI Incident Response Capability:**
+
+*AI-specific playbook elements:*
+
+**Prompt Injection Detected:**
+1. Block source (IP, user, API key)
+2. Review conversation history
+3. Check for data exfiltration
+4. Assess blast radius
+5. Update detection rules
+6. Document and report
+
+**Model Compromise Suspected:**
+1. Take model offline
+2. Roll back to known-good version
+3. Preserve forensic evidence
+4. Analyze model behavior changes
+5. Review training pipeline
+6. Redeploy with enhanced monitoring
+
+**Training Data Compromise:**
+1. Quarantine affected data
+2. Identify affected models
+3. Assess model behavior impact
+4. Retrain if necessary
+5. Update data validation rules
+6. Review data provenance chain
+
+### Phase 4: Excellence (Months 8-12+)
+
+Reach mature AISecOps capability.
+
+**Continuous AI Security Testing:**
+
+*Integration with CI/CD:*
+- Automated prompt injection testing for LLM apps
+- Model security scanning before deployment
+- Dependency vulnerability checking for ML libraries
+- Configuration compliance validation
+
+**AI Security Metrics & Reporting:**
+
+*Operational metrics:*
+- AI alert volume and triage time
+- False positive rate for AI detection
+- Time to respond to AI incidents
+- Coverage of AI systems with security controls
+
+*Risk metrics:*
+- AI systems without security controls
+- Known vulnerabilities in AI dependencies
+- Time since last adversarial test
+- Training data provenance coverage
+
+**Predictive and Proactive Security:**
+
+*Advanced capabilities:*
+- AI-powered threat prediction
+- Automated threat hunting
+- Proactive vulnerability discovery
+- Self-healing security controls
+
+---
+
+You now have the architecture blueprint and implementation roadmap. But AISecOps isn't just about technology — it's about people, processes, and governance.
+
+<div class="bg-cyan-500/10 border border-cyan-500/20 rounded-xl p-6 my-8">
+<p class="text-zinc-300 mb-3"><strong class="text-white">Continue reading:</strong> The final part covers the human element, regulatory landscape, metrics, and how to get started tomorrow.</p>
+<a href="/blog/aisecops-part-4-operations" class="inline-flex items-center gap-2 px-4 py-2 bg-cyan-500/20 hover:bg-cyan-500/30 border border-cyan-500/30 rounded-lg text-cyan-400 font-medium text-sm transition-colors">Part 4: Building Your Program →</a>
+</div>
+
+*This is Part 3 of a 4-part series. [Part 1: Foundations](/blog/aisecops-part-1-foundations) | [Part 2: Threats](/blog/aisecops-part-2-threats) | [Part 4: Building Your Program](/blog/aisecops-part-4-operations)*
+`,
+  },
+  // ============ AISECOPS SERIES - PART 4 ============
+  {
+    slug: "aisecops-part-4-operations",
+    title: "AISecOps Part 4: Building Your Program",
+    description: "The human element, regulatory landscape, metrics that matter, and how to get started tomorrow. Complete your AISecOps journey.",
+    category: "AI Security",
+    date: "March 8, 2026",
+    image: "/img/blog_images/3.jpg",
+    augmented: true,
+    series: {
+      name: "The Complete AISecOps Guide",
+      part: 4,
+      total: 4,
+      prev: "aisecops-part-3-architecture",
+    },
+    content: `
+<div class="bg-zinc-800/50 border border-zinc-700 rounded-xl p-4 mb-8">
+<p class="text-sm text-zinc-400"><strong class="text-white">This is Part 4 of a 4-part series.</strong> <a href="/blog/aisecops-part-3-architecture" class="text-cyan-400 hover:text-cyan-300">← Part 3: Architecture</a> | <a href="/blog/aisecops-part-1-foundations" class="text-cyan-400 hover:text-cyan-300">Start from Part 1</a></p>
+</div>
+
+## The Human Element
+
+Technology alone doesn't create AISecOps capability. You need the right people, organized correctly.
+
+### Emerging Roles
+
+**AI Security Specialist**
+- Understands ML engineering AND security
+- Threat models AI systems
+- Designs AI-specific controls
+- Conducts adversarial testing
+- Responds to AI incidents
+
+*Skills:* ML/DL frameworks, security architecture, adversarial ML, red teaming
+
+**Security Data Scientist**
+- Builds custom detection models
+- Analyzes security data at scale
+- Tunes AI tools for your environment
+- Develops security ML applications
+- Validates AI tool performance
+
+*Skills:* Data science, ML engineering, security domain knowledge, statistics
+
+**AI SOAR Engineer**
+- Designs automated response workflows
+- Integrates AI decision-making with human oversight
+- Builds custom playbooks for AI scenarios
+- Optimizes human-machine teaming
+
+*Skills:* Automation, integration, workflow design, security operations
+
+**AI Governance Analyst**
+- Ensures AI systems comply with regulations
+- Maintains AI system inventory
+- Conducts AI risk assessments
+- Manages AI audit processes
+- Tracks emerging AI requirements
+
+*Skills:* Compliance, risk management, audit, policy development
+
+### The SOC Tier Restructuring
+
+Traditional SOC: Tier 1 (Alert Triage) → Tier 2 (Investigation) → Tier 3 (Advanced Analysis)
+
+AI-enabled SOC: Flat structure with specialized functions
+
+**Why the change:**
+- AI automates Tier 1 tasks (screening 92% of alerts)
+- Remaining alerts need higher-skill investigation
+- New work emerges: AI tool validation, adversarial testing, AI incident response
+
+**New SOC functions:**
+- **AI Operations**: Monitor and maintain AI tools
+- **Escalation Handling**: Investigate AI-flagged anomalies
+- **Threat Hunting**: Creative adversary modeling (AI assists but doesn't replace)
+- **AI Red Team**: Test AI defenses
+- **Response & Remediation**: Execute playbooks with AI automation
+
+### Career Development
+
+**Traditional path:** Tier 1 analyst → Tier 2 analyst → Tier 3 analyst → Senior analyst
+
+**New paths:**
+1. **AI Security Specialist**: Security analyst → AI security training → Adversarial ML → AI red team
+2. **Security Data Scientist**: Data science → Security domain → Detection engineering → ML security
+3. **AI Operations**: SOC analyst → SOAR engineering → AI tool integration → AI operations lead
+4. **AI Governance**: Compliance → AI risk management → AI audit → AI governance lead
+
+### Hiring and Upskilling
+
+**When to hire vs. train:**
+- **Hire**: Security data scientists (hard to train from scratch)
+- **Train**: Existing analysts on AI tools and concepts
+- **Hybrid**: AI security specialists (security background + AI training)
+
+**Training priorities:**
+1. AI literacy for all security staff
+2. AI tool proficiency for analysts
+3. Adversarial ML for senior practitioners
+4. AI governance for compliance staff
+
+---
+
+## Part VII: Regulatory Landscape
+
+AISecOps isn't just operational efficiency — it's increasingly a compliance requirement.
+
+### EU AI Act
+
+The world's first comprehensive AI regulation is already in effect.
+
+**Key requirements affecting AISecOps:**
+
+**Article 15 - Cybersecurity:**
+High-risk AI systems must have appropriate cybersecurity measures including:
+- Resilience against unauthorized access
+- Protection against manipulation
+- Logging for traceability
+- Graceful degradation
+
+**Article 9 - Risk Management:**
+Continuous risk management throughout AI system lifecycle. AISecOps provides the operational framework.
+
+**Article 14 - Human Oversight:**
+High-risk systems require human oversight by qualified individuals. AISecOps defines the oversight model.
+
+**Article 17 - Quality Management:**
+Quality management systems must address security. AISecOps processes demonstrate this.
+
+**Timeline:**
+- February 2025: Prohibited practices and AI literacy requirements in effect
+- August 2025: GPAI model obligations
+- August 2026: High-risk AI system requirements
+
+### SEC AI Guidance (Emerging)
+
+The SEC is developing guidance on AI governance for public companies. Expected requirements:
+- Disclosure of material AI risks
+- Board-level AI oversight
+- AI risk management processes
+- AI incident disclosure
+
+AISecOps documentation and metrics support disclosure requirements.
+
+### NIST AI RMF Adoption
+
+Federal agencies are adopting NIST AI RMF. For government contractors and partners:
+- FedRAMP will likely incorporate AI security requirements
+- Federal procurement will require AI RMF alignment
+- Supply chain requirements will extend to AI systems
+
+### Industry-Specific Requirements
+
+**Financial Services:**
+- OCC and FDIC guidance on AI/ML risk management
+- Model risk management (SR 11-7) applies to AI models
+- Fair lending requirements for AI-based credit decisions
+
+**Healthcare:**
+- FDA guidance on AI/ML medical devices
+- HIPAA implications for AI processing PHI
+- Clinical decision support requirements
+
+**Critical Infrastructure:**
+- Sector-specific AI security requirements emerging
+- TSA, NERC, and other regulators developing AI guidance
+
+---
+
+## Part VIII: Metrics That Matter
+
+What gets measured gets managed. Here are the metrics for AISecOps.
+
+### Axis 1: AI-Powered Security Operations
+
+**Efficiency Metrics:**
+| Metric | Definition | Target |
+|--------|------------|--------|
+| Mean Time to Triage (AI) | Time from alert to initial AI classification | <1 minute |
+| Human Time to Investigate | Time analysts spend on AI-escalated alerts | <15 minutes |
+| Alert Volume Reduction | Percentage of alerts auto-closed by AI | >70% |
+| False Positive Rate | AI-classified benign that were actually malicious | <5% |
+
+**Effectiveness Metrics:**
+| Metric | Definition | Target |
+|--------|------------|--------|
+| True Positive Rate | Malicious alerts correctly identified | >95% |
+| Mean Time to Detect | Time from compromise to detection | <24 hours |
+| Mean Time to Respond | Time from detection to containment | <4 hours |
+| Analyst Satisfaction | Survey score on AI tool helpfulness | >4/5 |
+
+### Axis 2: AI System Security
+
+**Coverage Metrics:**
+| Metric | Definition | Target |
+|--------|------------|--------|
+| AI System Inventory Coverage | Percentage of AI systems documented | 100% |
+| Security Control Coverage | AI systems with all required controls | >95% |
+| Adversarial Test Coverage | AI systems tested in last 90 days | 100% |
+| Provenance Coverage | Models with verified provenance | 100% |
+
+**Risk Metrics:**
+| Metric | Definition | Target |
+|--------|------------|--------|
+| Unmitigated AI Vulnerabilities | Known vulns without remediation | 0 critical |
+| AI Incident Rate | Security incidents involving AI | Trending down |
+| Mean Time to Remediate AI Vulns | Time from discovery to fix | <30 days |
+| Third-Party AI Risk Score | Risk rating of AI vendors | Monitored |
+
+### Executive Dashboard
+
+For board and executive reporting:
+
+**AISecOps Health Score:** Composite of key metrics (0-100)
+**AI Risk Posture:** High/Medium/Low based on unmitigated risks
+**Regulatory Compliance Status:** On track / At risk / Non-compliant
+**Key Incidents:** AI-related security incidents this period
+**Investment ROI:** Efficiency gains from AI security operations
+
+---
+
+## Part IX: Getting Started Tomorrow
+
+If you're starting from zero, here's your minimum viable AISecOps program.
+
+### Week 1-2: Inventory and Awareness
+
+**Day 1-3:**
+- Email IT and business leaders: "What AI systems are we using?"
+- Start a spreadsheet: System name, owner, purpose, data sensitivity
+
+**Day 4-7:**
+- Interview product teams about AI in their roadmaps
+- Check with procurement for AI vendor contracts
+- Review cloud billing for AI service usage
+
+**Day 8-14:**
+- Complete initial inventory (even if incomplete)
+- Identify top 5 highest-risk AI systems
+- Brief security leadership on findings
+
+### Week 3-4: Quick Assessment
+
+**Using MITRE ATLAS:**
+- For each top-5 system, identify applicable techniques
+- Document current controls (even if minimal)
+- List obvious gaps
+
+**Using OWASP Top 10 for LLMs:**
+- For any LLM systems, assess against the top 10
+- Note which vulnerabilities are unaddressed
+
+**Deliverable:** One-page risk summary for each top-5 system
+
+### Month 2: First Controls
+
+**Deploy basic protections:**
+- Input validation for LLM systems (if any)
+- Logging for all AI interactions
+- Access control review for AI APIs
+
+**Start AI security logging:**
+- Ensure all AI inputs/outputs are captured
+- Set up basic anomaly alerts
+
+### Month 3: Formalize
+
+**Create governance structure:**
+- Assign AISecOps owner
+- Draft initial AI security policy
+- Establish AI security review for new deployments
+
+**Begin regular activities:**
+- Monthly AI system review
+- Quarterly adversarial testing (even basic)
+- Annual AI security assessment
+
+### Ongoing: Iterate and Mature
+
+**Expand scope gradually:**
+- Add more systems to inventory
+- Deepen controls for high-risk systems
+- Build internal expertise
+
+**Measure and report:**
+- Track metrics monthly
+- Report to leadership quarterly
+- Adjust priorities based on data
+
+---
+
+## Conclusion: The Inevitability of AISecOps
+
+<div class="bg-cyan-500/10 border border-cyan-500/20 rounded-xl p-6 my-8">
+<h3 class="text-lg font-semibold text-white mb-2">📊 Where Do You Stand?</h3>
+<p class="text-zinc-400 text-sm mb-4">You've learned the frameworks, threats, and implementation roadmap. Now assess your organization's AISecOps maturity and get personalized recommendations.</p>
+<a href="/aisecops-assessment" class="inline-flex items-center gap-2 px-4 py-2 bg-cyan-500/20 hover:bg-cyan-500/30 border border-cyan-500/30 rounded-lg text-cyan-400 font-medium text-sm transition-colors">Take the AISecOps Maturity Assessment →</a>
+</div>
+
+AISecOps isn't a choice. It's a consequence of two irresistible forces:
+
+1. **AI is transforming security operations.** The alert volumes are unmanageable without AI. The threat complexity is increasing. Human-only SOCs cannot scale.
+
+2. **AI systems are becoming critical infrastructure.** Every organization is deploying AI. Those systems need security. Traditional security approaches don't address AI-specific threats.
+
+The organizations that recognize this early will:
+- **Operate more efficiently** — AI handling routine work, humans doing high-value analysis
+- **Defend against new threats** — Prepared for adversarial ML, prompt injection, model compromise
+- **Meet regulatory requirements** — Documentation and controls in place before mandates hit
+- **Enable safe AI adoption** — Security as enabler, not blocker
+
+The organizations that don't will:
+- **Drown in alerts** — Unable to scale security operations to match threat volume
+- **Get compromised through AI** — Blind to AI-specific attack vectors
+- **Scramble for compliance** — Reactive to regulations rather than prepared
+- **Slow AI adoption** — Security as bottleneck because they lack AI security capability
+
+The frameworks exist: MITRE ATLAS, OWASP AI Exchange, NIST AI RMF. The tools are maturing: AI-powered SIEM, guardrail systems, adversarial testing platforms. The talent is developing: new roles, new skills, new career paths.
+
+The only question is whether your organization starts now or plays catch-up later.
+
+---
+
+## Resources and Further Reading
+
+### Frameworks
+- [MITRE ATLAS](https://atlas.mitre.org/) — AI threat intelligence framework
+- [OWASP AI Exchange](https://owaspai.org/) — AI security guidance (300+ pages)
+- [OWASP Top 10 for LLMs](https://owasp.org/www-project-top-10-for-large-language-model-applications/)
+- [OWASP Machine Learning Security Top 10](https://owasp.org/www-project-machine-learning-security-top-10/)
+- [NIST AI RMF](https://www.nist.gov/itl/ai-risk-management-framework)
+- [NIST AI 600-1 GenAI Profile](https://nvlpubs.nist.gov/nistpubs/ai/NIST.AI.600-1.pdf)
+- [Google SAIF](https://safety.google/cybersecurity-advancements/saif/)
+- [NSFOCUS AISecOps Whitepaper](https://nsfocusglobal.com/wp-content/uploads/2023/10/NSFOCUS-AISecOps-Whitepaper.pdf)
+
+### Tools
+- [MITRE ATLAS Navigator](https://atlas.mitre.org/navigator)
+- [MITRE Caldera + Arsenal](https://github.com/mitre/caldera)
+- [Microsoft Counterfit](https://github.com/Azure/counterfit)
+- [IBM Adversarial Robustness Toolbox](https://github.com/Trusted-AI/adversarial-robustness-toolbox)
+- [Promptfoo](https://www.promptfoo.dev/)
+- [Garak](https://github.com/NVIDIA/garak)
+- [NeMo Guardrails](https://github.com/NVIDIA/NeMo-Guardrails)
+
+### Cheat Sheets
+- [OWASP Secure AI Model Ops Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Secure_AI_Model_Ops_Cheat_Sheet.html)
+- [OWASP AI Agent Security Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/AI_Agent_Security_Cheat_Sheet.html)
+
+### Research
+- [Adversarial Machine Learning: A Survey](https://arxiv.org/abs/1810.00388)
+- [Prompt Injection Attacks and Defenses](https://arxiv.org/abs/2302.12173)
+- [Model Extraction Attacks](https://arxiv.org/abs/2003.00088)
+- [Training Data Poisoning Attacks](https://arxiv.org/abs/2007.08745)
+
+---
+
+<div class="bg-cyan-500/10 border border-cyan-500/20 rounded-xl p-6 my-8">
+<h3 class="text-lg font-semibold text-white mb-2">📊 Assess Your AISecOps Maturity</h3>
+<p class="text-zinc-400 text-sm mb-4">You've completed the full AISecOps guide. Now benchmark your organization's capabilities and get personalized recommendations.</p>
+<a href="/aisecops-assessment" class="inline-flex items-center gap-2 px-4 py-2 bg-cyan-500/20 hover:bg-cyan-500/30 border border-cyan-500/30 rounded-lg text-cyan-400 font-medium text-sm transition-colors">Take the AISecOps Assessment →</a>
+</div>
+
+*This is Part 4 of a 4-part series. [Part 1: Foundations](/blog/aisecops-part-1-foundations) | [Part 2: Threats](/blog/aisecops-part-2-threats) | [Part 3: Architecture](/blog/aisecops-part-3-architecture)*
+
+*This series will be updated as the AISecOps landscape evolves. Last updated: March 8, 2026.*
+
+`,
+  },
   {
     slug: "eu-ai-act-ciso-compliance-briefing",
     title: "The EU AI Act: A CISO's Compliance Briefing",

@@ -1,8 +1,8 @@
-# AxiomMatrix DevSecOps Maturity Assessment Methodology
+# AxioMatrix DevSecOps Maturity Assessment Methodology
 
 ## Overview
 
-This methodology provides a structured, repeatable approach to evaluating an organization's software security maturity. Based on OWASP SAMM v2.0 with AxiomMatrix enhancements for DevSecOps and CI/CD pipeline security.
+This methodology provides a structured, repeatable approach to evaluating an organization's software security maturity. Based on OWASP SAMM v2.0 with AxioMatrix enhancements for DevSecOps and CI/CD pipeline security.
 
 ---
 

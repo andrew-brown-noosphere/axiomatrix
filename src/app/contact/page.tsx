@@ -1,14 +1,11 @@
 "use client";
 
-import { useState, useRef } from "react";
+import { useState } from "react";
 import Image from "next/image";
-import { Mail, Calendar, Play, Pause, CheckCircle, AlertCircle } from "lucide-react";
+import { Mail, Calendar, CheckCircle, AlertCircle } from "lucide-react";
 import { brand } from "@/lib/brand";
 
 export default function ContactPage() {
-  const [isPlaying, setIsPlaying] = useState(false);
-  const videoRef = useRef<HTMLVideoElement>(null);
-
   // Form state
   const [formData, setFormData] = useState({
     name: "",
@@ -18,21 +15,6 @@ export default function ContactPage() {
   });
   const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
   const [errorMessage, setErrorMessage] = useState("");
-
-  const toggleVideo = () => {
-    if (videoRef.current) {
-      if (isPlaying) {
-        videoRef.current.pause();
-      } else {
-        videoRef.current.play();
-      }
-      setIsPlaying(!isPlaying);
-    }
-  };
-
-  const handleVideoEnd = () => {
-    setIsPlaying(false);
-  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -74,48 +56,12 @@ export default function ContactPage() {
               className="mx-auto mb-8 rounded-2xl shadow-2xl shadow-cyan-500/20"
             />
             <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-6">
-              Get in Touch
+              Let's Talk
             </h1>
             <p className="text-lg text-zinc-400">
-              Schedule a free discovery call. We'll assess your current security posture and show you where AI-assisted DevSecOps fits.
+              Whether you need help securing your CI/CD pipeline, building custom AI agents, or navigating EU compliance requirements — we're here to help. No sales pitch, just a conversation about what you're trying to solve.
             </p>
           </div>
-        </div>
-      </section>
-
-      {/* Video Testimonial */}
-      <section className="pb-16">
-        <div className="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8">
-          <div className="relative rounded-2xl overflow-hidden border border-zinc-700/50 shadow-2xl shadow-cyan-500/10">
-            <video
-              ref={videoRef}
-              className="w-full aspect-video bg-zinc-900"
-              onEnded={handleVideoEnd}
-              playsInline
-            >
-              <source src="/video/ciso-testimonial.mp4" type="video/mp4" />
-            </video>
-
-            {/* Play/Pause overlay */}
-            <button
-              onClick={toggleVideo}
-              className={`absolute inset-0 flex items-center justify-center bg-black/30 transition-opacity duration-300 ${
-                isPlaying ? "opacity-0 hover:opacity-100" : "opacity-100"
-              }`}
-            >
-              <div className="btn-chrome-primary p-5 rounded-full shadow-lg shadow-cyan-500/30">
-                {isPlaying ? (
-                  <Pause className="h-8 w-8 text-white" />
-                ) : (
-                  <Play className="h-8 w-8 text-white ml-1" />
-                )}
-              </div>
-            </button>
-          </div>
-
-          <p className="text-center text-zinc-400 text-sm mt-4">
-            Hear from a CISO on navigating security in the age of AI
-          </p>
         </div>
       </section>
 

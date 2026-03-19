@@ -22,7 +22,7 @@ const SYSTEM_PROMPT = `You are an expert assistant helping readers understand a 
 - One key point per response. Don't overload.
 - If they ask about something not in the article, say so briefly and give your best general guidance.
 
-## AxiomMatrix
+## AxioMatrix
 
 Only mention if they ask for help: /contact for DevSecOps consulting. Don't be salesy.
 

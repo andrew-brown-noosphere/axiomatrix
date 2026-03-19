@@ -84,7 +84,7 @@ const campaigns = [
   ['EU AI Act Content', 'ICP 4', 'Blog + Webinar', '"AI Governance for EU AI Act Compliance"', 'Download compliance guide', '30', '$150K', 'Q1-Q2'],
   ['Partner with GRC vendors', 'ICP 4', 'Partner', 'Joint solution for AI compliance', 'Partner referrals', '20', '$100K', 'Q2-Q3'],
   [''],
-  ['CAMPAIGN 4: AxiomMatrix Upsell', '', '', '', '', '', '', ''],
+  ['CAMPAIGN 4: AxioMatrix Upsell', '', '', '', '', '', '', ''],
   ['Existing Client Outreach', 'All ICPs', 'Direct', '"Now offering AI Gateway through our partnership"', 'Schedule platform demo', '25', '$200K', 'Q1'],
   ['Assessment to Platform', 'All ICPs', 'Direct', 'Assessment reveals AI governance gaps → Gateway solves', 'Add Gateway to engagement', '20', '$150K', 'Q1-Q4'],
   [''],
@@ -133,7 +133,7 @@ const quarterly = [
   ['QUARTERLY TARGETS'],
   [''],
   ['Quarter', 'Pipeline Target', 'Cumulative Pipeline', 'Leads Target', 'Deals Target', 'Key Campaigns', 'Focus'],
-  ['Q1 2026', '$250,000', '$250,000', '80', '8', 'AxiomMatrix Upsell, Outbound CISO', 'Foundation - existing relationships + early outbound'],
+  ['Q1 2026', '$250,000', '$250,000', '80', '8', 'AxioMatrix Upsell, Outbound CISO', 'Foundation - existing relationships + early outbound'],
   ['Q2 2026', '$300,000', '$550,000', '100', '10', 'Webinars, EU AI Act, Enterprise events', 'Scale - content + events producing'],
   ['Q3 2026', '$250,000', '$800,000', '80', '8', 'Product-Led Trial, Partner referrals', 'Acceleration - PLG + partners'],
   ['Q4 2026', '$200,000', '$1,000,000', '75', '5', 'Maintain all channels', 'Optimization - refine what works'],
@@ -186,7 +186,7 @@ ws6['!cols'] = [{ wch: 28 }, { wch: 40 }, { wch: 15 }, { wch: 15 }, { wch: 20 }]
 XLSX.utils.book_append_sheet(wb, ws6, 'Product & Pricing');
 
 // ============================================
-// SHEET 7: AxiomMatrix Economics
+// SHEET 7: AxioMatrix Economics
 // ============================================
 const economics = [
   ['CYBERSECGARD ECONOMICS (Reseller Model)'],
@@ -200,7 +200,7 @@ const economics = [
   ['Partner (Thales/SignPath)', 'Reseller', '20%', 'Annual', '20% of $30K = $6K'],
   [''],
   ['BLENDED DEAL EXAMPLE'],
-  ['Component', 'Customer Pays', 'AxiomMatrix Revenue', 'Margin %'],
+  ['Component', 'Customer Pays', 'AxioMatrix Revenue', 'Margin %'],
   ['Assessment + CI/CD Integration', '$75,000', '$75,000', '100%'],
   ['Noosphere AI Gateway (Pro)', '$50,000', '$15,000', '30%'],
   ['SignPath Licenses', '$25,000', '$5,000', '20%'],
@@ -210,16 +210,16 @@ const economics = [
   ['Metric', 'Target', 'Notes'],
   ['Noosphere Pipeline Generated', '$1,000,000', 'This model'],
   ['Noosphere Closed (30%)', '$300,000', 'Platform revenue'],
-  ['AxiomMatrix Margin (30%)', '$90,000', 'Reseller commission'],
+  ['AxioMatrix Margin (30%)', '$90,000', 'Reseller commission'],
   ['Attached Services (1:1 ratio)', '$300,000', 'Consulting/training on platform deals'],
-  ['Total AxiomMatrix Revenue', '$390,000', 'From Noosphere-sourced deals'],
+  ['Total AxioMatrix Revenue', '$390,000', 'From Noosphere-sourced deals'],
   [''],
   ['Plus: Standalone consulting, partner reselling, etc.'],
 ];
 
 const ws7 = XLSX.utils.aoa_to_sheet(economics);
 ws7['!cols'] = [{ wch: 32 }, { wch: 18 }, { wch: 22 }, { wch: 15 }, { wch: 20 }];
-XLSX.utils.book_append_sheet(wb, ws7, 'AxiomMatrix Economics');
+XLSX.utils.book_append_sheet(wb, ws7, 'AxioMatrix Economics');
 
 // Write file
 const outputPath = path.join(__dirname, '..', 'Noosphere-AI-Gateway-Pipeline-Model.xlsx');

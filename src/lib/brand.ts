@@ -2,7 +2,7 @@
 // All fields marked [CUSTOMIZE] should be updated for your brand
 export const brand = {
   // [CUSTOMIZE] Company name and messaging
-  name: "AxiomMatrix",
+  name: "AxioMatrix",
   copyrightOwner: "Voyant, LLC", // Legal entity for copyright
   tagline: "Your Tagline Here",
   description: "Your company description for DevSecOps consulting services.",

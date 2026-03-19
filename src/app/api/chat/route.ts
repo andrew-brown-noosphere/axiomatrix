@@ -1,9 +1,9 @@
 import { NextRequest } from "next/server";
 import Anthropic from "@anthropic-ai/sdk";
 
-const SYSTEM_PROMPT = `You are a helpful AI assistant for AxiomMatrix. You're friendly, knowledgeable, and genuinely helpful.
+const SYSTEM_PROMPT = `You are a helpful AI assistant for AxioMatrix. You're friendly, knowledgeable, and genuinely helpful.
 
-AxiomMatrix helps security leaders (CISOs, VP SecOps) navigate the age of AI. We augment their superpowers as they lead technical teams.
+AxioMatrix helps security leaders (CISOs, VP SecOps) navigate the age of AI. We augment their superpowers as they lead technical teams.
 
 Our services:
 - Free Discovery Call - understand where you stand and what it takes to strengthen security posture

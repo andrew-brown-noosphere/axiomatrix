@@ -1113,7 +1113,6 @@ export default function AIActAssessmentPage() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [selectedOption, setSelectedOption] = useState<number | null>(null);
   const [showRiskAssessment, setShowRiskAssessment] = useState(false);
-  const [showRiskPopup, setShowRiskPopup] = useState(false);
   const [isAnimating, setIsAnimating] = useState(false);
   const [animationDirection, setAnimationDirection] = useState<"in" | "out">("in");
 
@@ -1134,17 +1133,6 @@ export default function AIActAssessmentPage() {
     const timer = setTimeout(() => setIsAnimating(false), 400);
     return () => clearTimeout(timer);
   }, [currentSection, currentQuestion]);
-
-  useEffect(() => {
-    const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.key === "Enter" && !showRiskPopup && !showResults) {
-        e.preventDefault();
-        handleNext();
-      }
-    };
-    window.addEventListener("keydown", handleKeyDown);
-    return () => window.removeEventListener("keydown", handleKeyDown);
-  }, [showRiskPopup, showResults, answers, question.id]);
 
   const handleAnswer = (value: number) => {
     setSelectedOption(value);
@@ -1177,18 +1165,20 @@ export default function AIActAssessmentPage() {
     animateAndNavigate(navigate);
   }, [currentQuestion, currentSection, section.questions.length, animateAndNavigate]);
 
-  const handleNext = () => {
-    if (answers[question.id] !== undefined) {
-      setShowRiskPopup(true);
-    } else {
-      navigateToNext();
-    }
-  };
-
-  const handleRiskPopupContinue = () => {
-    setShowRiskPopup(false);
+  const handleNext = useCallback(() => {
     navigateToNext();
-  };
+  }, [navigateToNext]);
+
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Enter" && !showResults) {
+        e.preventDefault();
+        handleNext();
+      }
+    };
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [showResults, handleNext]);
 
   const handleBack = () => {
     const navigate = () => {
@@ -1683,65 +1673,6 @@ export default function AIActAssessmentPage() {
         </div>
       </div>
 
-      {/* Risk Assessment Popup */}
-      {showRiskPopup && answers[question.id] !== undefined && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
-          <div
-            className="absolute inset-0 bg-black/70 backdrop-blur-sm"
-            onClick={handleRiskPopupContinue}
-          />
-
-          <div className="relative w-full max-w-md animate-in fade-in zoom-in-95 duration-200">
-            <div className="bg-zinc-900 border border-zinc-700 rounded-2xl overflow-hidden shadow-2xl">
-              <div className={`p-6 bg-gradient-to-br ${
-                answers[question.id] === 0 ? "from-red-500/20 to-red-500/5" :
-                answers[question.id] === 1 ? "from-amber-500/20 to-amber-500/5" :
-                answers[question.id] === 2 ? "from-purple-500/20 to-purple-500/5" :
-                "from-green-500/20 to-green-500/5"
-              }`}>
-                <div className="flex items-center gap-3 mb-3">
-                  <div className={`p-2 rounded-xl ${
-                    answers[question.id] === 0 ? "bg-red-500/20" :
-                    answers[question.id] === 1 ? "bg-amber-500/20" :
-                    answers[question.id] === 2 ? "bg-purple-500/20" :
-                    "bg-green-500/20"
-                  }`}>
-                    <AlertTriangle className={`h-5 w-5 ${riskAssessments[answers[question.id]].color}`} />
-                  </div>
-                  <div>
-                    <p className="text-xs text-zinc-500 uppercase tracking-wider">Compliance Gap</p>
-                    <h3 className={`text-lg font-semibold ${riskAssessments[answers[question.id]].color}`}>
-                      {riskAssessments[answers[question.id]].level}
-                    </h3>
-                  </div>
-                </div>
-              </div>
-
-              <div className="p-6">
-                <p className="text-zinc-300 leading-relaxed mb-4">
-                  {riskAssessments[answers[question.id]].message}
-                </p>
-
-                <div className="flex items-center gap-2 text-sm text-zinc-500 mb-6">
-                  <span className="px-2 py-1 rounded bg-zinc-800 text-zinc-400">
-                    Level {answers[question.id]} selected
-                  </span>
-                  <span>·</span>
-                  <span>{question.topic}</span>
-                </div>
-
-                <button
-                  onClick={handleRiskPopupContinue}
-                  className="w-full flex items-center justify-center gap-2 px-6 py-3 rounded-xl font-medium bg-gradient-to-r from-purple-500 to-purple-400 text-white hover:from-purple-400 hover:to-purple-300 transition-all"
-                >
-                  Continue
-                  <ArrowRight className="h-4 w-4" />
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
-      )}
     </div>
   );
 }

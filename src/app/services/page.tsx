@@ -24,7 +24,7 @@ const services = [
     icon: Bot,
     title: "Custom AI Agents & MCP Servers",
     description: "We build secure agentic workflows—custom APIs, AI agents, and MCP servers that integrate safely into your infrastructure. See our work at DevExp.ai.",
-    href: "/contact",
+    href: "/custom-ai-agents-mcp-servers",
   },
 ];
 

@@ -1,6 +1,6 @@
 /**
- * AxiomMatrix Site Telemetry - Lightweight tracking script
- * Add to pages: <script src="/tracking.js" data-org="axiommatrix"></script>
+ * AxioMatrix Site Telemetry - Lightweight tracking script
+ * Add to pages: <script src="/tracking.js" data-org="axiomatrix"></script>
  */
 (function() {
   // Skip tracking for internal/API paths
@@ -8,7 +8,7 @@
   if (EXCLUDED_PATHS.some(p => location.pathname.includes(p))) return;
 
   const script = document.currentScript;
-  const ORG_ID = script?.getAttribute('data-org') || 'axiommatrix';
+  const ORG_ID = script?.getAttribute('data-org') || 'axiomatrix';
   const API_URL = '/api/telemetry';
 
   let sessionId = sessionStorage.getItem('v_sid');

@@ -1,11 +1,25 @@
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
-import { ArrowLeft } from "lucide-react";
+import { ArrowLeft, ArrowRight } from "lucide-react";
 import { getPost, getAllPosts } from "@/lib/blog-posts";
 import type { Metadata } from "next";
 import BlogAssistant from "@/components/BlogAssistant";
 import BlogContentWithClarify from "@/components/BlogContentWithClarify";
+import CommunityPulse from "@/components/CommunityPulse";
+
+// Map blog slugs to community pulse topics
+const SLUG_TO_TOPIC: Record<string, string> = {
+  "eu-cyber-resilience-act-draft-guidance-what-it-means": "cra",
+  "eu-ai-act-ciso-compliance-briefing": "ai-act",
+  "ai-coding-assistants-security-guide": "devsecops",
+  "managing-devsecops-team-ai-era": "devsecops",
+  // AISecOps series - all 4 parts
+  "aisecops-part-1-foundations": "aisecops",
+  "aisecops-part-2-threats": "aisecops",
+  "aisecops-part-3-architecture": "aisecops",
+  "aisecops-part-4-operations": "aisecops",
+};
 
 interface Props {
   params: Promise<{ slug: string }>;
@@ -24,12 +38,12 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
   if (!post) {
     return {
-      title: "Post Not Found | AxiomMatrix",
+      title: "Post Not Found | AxioMatrix",
     };
   }
 
   return {
-    title: `${post.title} | AxiomMatrix`,
+    title: `${post.title} | AxioMatrix`,
     description: post.description,
   };
 }
@@ -166,13 +180,55 @@ export default async function BlogPost({ params }: Props) {
               </header>
 
               {/* Content */}
-              <BlogContentWithClarify html={contentHtml} enableClarify={true} />
+              <BlogContentWithClarify
+                html={contentHtml}
+                enableClarify={true}
+                topic={SLUG_TO_TOPIC[slug]}
+                enableCommunityCallouts={!!SLUG_TO_TOPIC[slug]}
+                calloutInterval={2}
+              />
+
+              {/* Community Pulse */}
+              {SLUG_TO_TOPIC[slug] && (
+                <div className="mt-12">
+                  <CommunityPulse topic={SLUG_TO_TOPIC[slug]} limit={3} />
+                </div>
+              )}
+
+              {/* Series Navigation */}
+              {post.series && (post.series.prev || post.series.next) && (
+                <div className="mt-12 p-6 bg-gradient-to-r from-cyan-950/30 to-zinc-900/50 border border-cyan-500/20 rounded-xl">
+                  <div className="text-xs text-cyan-400 font-medium mb-3">
+                    {post.series.name} — Part {post.series.part} of {post.series.total}
+                  </div>
+                  <div className="flex items-center justify-between gap-4">
+                    {post.series.prev ? (
+                      <Link
+                        href={`/blog/${post.series.prev}`}
+                        className="flex items-center gap-2 text-zinc-400 hover:text-white transition-colors"
+                      >
+                        <ArrowLeft className="h-4 w-4" />
+                        <span className="text-sm">Previous Part</span>
+                      </Link>
+                    ) : <div />}
+                    {post.series.next && (
+                      <Link
+                        href={`/blog/${post.series.next}`}
+                        className="flex items-center gap-2 px-4 py-2 bg-cyan-500/20 hover:bg-cyan-500/30 border border-cyan-500/30 rounded-lg text-cyan-400 font-medium text-sm transition-colors"
+                      >
+                        <span>Next Part</span>
+                        <ArrowRight className="h-4 w-4" />
+                      </Link>
+                    )}
+                  </div>
+                </div>
+              )}
 
               {/* Footer */}
               <footer className="mt-16 pt-8 border-t border-zinc-800">
                 <div className="bg-zinc-900/50 border border-zinc-800 rounded-xl p-6">
                   <h3 className="text-lg font-semibold mb-2">
-                    About <span className="text-cyan-400">Axiom</span><span className="text-white">Matrix</span>
+                    About <span className="text-cyan-400">Axio</span><span className="text-white">Matrix</span>
                   </h3>
                   <p className="text-zinc-400 mb-4">
                     We build DevSecOps infrastructure with AI-assisted security operations.
@@ -237,16 +293,55 @@ export default async function BlogPost({ params }: Props) {
         </header>
 
         {/* Content */}
-        <div
-          className="prose prose-invert max-w-none"
-          dangerouslySetInnerHTML={{ __html: contentHtml }}
+        <BlogContentWithClarify
+          html={contentHtml}
+          enableClarify={false}
+          topic={SLUG_TO_TOPIC[slug]}
+          enableCommunityCallouts={!!SLUG_TO_TOPIC[slug]}
+          calloutInterval={2}
         />
+
+        {/* Community Pulse */}
+        {SLUG_TO_TOPIC[slug] && (
+          <div className="mt-12">
+            <CommunityPulse topic={SLUG_TO_TOPIC[slug]} limit={3} />
+          </div>
+        )}
+
+        {/* Series Navigation */}
+        {post.series && (post.series.prev || post.series.next) && (
+          <div className="mt-12 p-6 bg-gradient-to-r from-cyan-950/30 to-zinc-900/50 border border-cyan-500/20 rounded-xl">
+            <div className="text-xs text-cyan-400 font-medium mb-3">
+              {post.series.name} — Part {post.series.part} of {post.series.total}
+            </div>
+            <div className="flex items-center justify-between gap-4">
+              {post.series.prev ? (
+                <Link
+                  href={`/blog/${post.series.prev}`}
+                  className="flex items-center gap-2 text-zinc-400 hover:text-white transition-colors"
+                >
+                  <ArrowLeft className="h-4 w-4" />
+                  <span className="text-sm">Previous Part</span>
+                </Link>
+              ) : <div />}
+              {post.series.next && (
+                <Link
+                  href={`/blog/${post.series.next}`}
+                  className="flex items-center gap-2 px-4 py-2 bg-cyan-500/20 hover:bg-cyan-500/30 border border-cyan-500/30 rounded-lg text-cyan-400 font-medium text-sm transition-colors"
+                >
+                  <span>Next Part</span>
+                  <ArrowRight className="h-4 w-4" />
+                </Link>
+              )}
+            </div>
+          </div>
+        )}
 
         {/* Footer */}
         <footer className="mt-16 pt-8 border-t border-zinc-800">
           <div className="bg-zinc-900/50 border border-zinc-800 rounded-xl p-6">
-            <h3 className="text-lg font-semibold text-white mb-2">
-              About AxiomMatrix
+            <h3 className="text-lg font-semibold mb-2">
+              About <span className="text-cyan-400">Axio</span><span className="text-white">Matrix</span>
             </h3>
             <p className="text-zinc-400 mb-4">
               We build DevSecOps infrastructure with AI-assisted security operations.

@@ -1,7 +1,7 @@
 import { NextRequest } from "next/server";
 import Anthropic from "@anthropic-ai/sdk";
 
-const SYSTEM_PROMPT = `You are an AI assistant acting as a senior DevSecOps security consultant at AxiomMatrix, conducting a quick readiness evaluation. Your goal is to help security leaders assess opportunities to strengthen their security posture - ultimately creating a genuine "aha moment" about areas they can improve.
+const SYSTEM_PROMPT = `You are an AI assistant acting as a senior DevSecOps security consultant at AxioMatrix, conducting a quick readiness evaluation. Your goal is to help security leaders assess opportunities to strengthen their security posture - ultimately creating a genuine "aha moment" about areas they can improve.
 
 APPROACH:
 1. Start warm and professional. Ask their name and role, then their company's industry and size.

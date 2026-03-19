@@ -177,6 +177,21 @@ export default function LayoutWrapper({
                     Readiness Evaluation
                   </Link>
                 </li>
+                <li>
+                  <Link href="/aisecops-assessment" className="text-sm text-zinc-400 hover:text-cyan-400 transition-colors">
+                    AISecOps Assessment
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/ai-act-assessment" className="text-sm text-zinc-400 hover:text-cyan-400 transition-colors">
+                    AI Act Readiness
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/cra-assessment" className="text-sm text-zinc-400 hover:text-cyan-400 transition-colors">
+                    CRA Readiness
+                  </Link>
+                </li>
               </ul>
             </div>
           </div>

@@ -1,0 +1,13 @@
+{
+  "name": "reddit-scanner",
+  "version": "1.0.0",
+  "type": "module",
+  "description": "Scans Reddit for community pulse content",
+  "scripts": {
+    "scan": "node scanner.js"
+  },
+  "dependencies": {
+    "@anthropic-ai/sdk": "^0.39.0",
+    "snoowrap": "^1.23.0"
+  }
+}

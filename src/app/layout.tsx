@@ -21,7 +21,7 @@ const spaceGrotesk = Space_Grotesk({
 });
 
 export const metadata: Metadata = {
-  title: "AxiomMatrix | DevSecOps Solutions",
+  title: "AxioMatrix | DevSecOps Solutions",
   description:
     "Next-generation DevSecOps solutions for enterprises navigating the AI era. Security. Certainty. Delivered.",
   keywords: [
@@ -46,7 +46,7 @@ export default function RootLayout({
         <LayoutWrapper>{children}</LayoutWrapper>
         <Script
           src="/tracking.js"
-          data-org="axiommatrix"
+          data-org="axiomatrix"
           strategy="afterInteractive"
         />
       </body>

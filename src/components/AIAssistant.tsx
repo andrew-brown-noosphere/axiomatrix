@@ -13,7 +13,7 @@ export default function AIAssistant() {
   const [messages, setMessages] = useState<Message[]>([
     {
       role: "assistant",
-      content: "Hi! I'm the AxiomMatrix assistant. How can I help you with DevSecOps?",
+      content: "Hi! I'm the AxioMatrix assistant. How can I help you with DevSecOps?",
     },
   ]);
   const [input, setInput] = useState("");
@@ -41,7 +41,7 @@ export default function AIAssistant() {
         const errorDetail = data.details ? ` (${data.details})` : "";
         setMessages((prev) => [
           ...prev,
-          { role: "assistant", content: `Having trouble connecting${errorDetail}. Please email contact@axiommatrix.io or try again.` },
+          { role: "assistant", content: `Having trouble connecting${errorDetail}. Please email contact@axiomatrix.tech or try again.` },
         ]);
         return;
       }
@@ -76,7 +76,7 @@ export default function AIAssistant() {
       const errorMsg = error instanceof Error ? error.message : "Network error";
       setMessages((prev) => [
         ...prev,
-        { role: "assistant", content: `Connection issue: ${errorMsg}. Please email contact@axiommatrix.io.` },
+        { role: "assistant", content: `Connection issue: ${errorMsg}. Please email contact@axiomatrix.tech.` },
       ]);
       setIsLoading(false);
     }
@@ -118,7 +118,7 @@ export default function AIAssistant() {
               </div>
               <div>
                 <h3 className="font-display font-semibold text-sm">
-                  <span className="text-cyan-400">Axiom</span><span className="text-white">Matrix</span>
+                  <span className="text-cyan-400">Axio</span><span className="text-white">Matrix</span>
                 </h3>
                 <p className="text-xs text-zinc-400">AI Assistant</p>
               </div>

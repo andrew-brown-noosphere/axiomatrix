@@ -91,7 +91,7 @@ async function notifySlack(visitor: {
         type: "section",
         text: {
           type: "mrkdwn",
-          text: "*New Visitor on AxiomMatrix* :shield:"
+          text: "*New Visitor on AxioMatrix* :shield:"
         }
       },
       {
@@ -135,7 +135,7 @@ async function notifySlackAssistant(data: {
         type: "section",
         text: {
           type: "mrkdwn",
-          text: "*AI Assistant Used on AxiomMatrix* :robot_face:"
+          text: "*AI Assistant Used on AxioMatrix* :robot_face:"
         }
       },
       {

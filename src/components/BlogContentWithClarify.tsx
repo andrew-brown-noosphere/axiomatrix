@@ -3,10 +3,14 @@
 import { useEffect, useRef } from "react";
 import { createRoot } from "react-dom/client";
 import { HelpCircle } from "lucide-react";
+import CommunityCallout from "./CommunityCallout";
 
 interface BlogContentWithClarifyProps {
   html: string;
   enableClarify?: boolean;
+  topic?: string;
+  enableCommunityCallouts?: boolean;
+  calloutInterval?: number; // Inject callout every N paragraphs
 }
 
 function ClarifyButton({ topic }: { topic: string }) {
@@ -27,42 +31,76 @@ function ClarifyButton({ topic }: { topic: string }) {
   );
 }
 
-export default function BlogContentWithClarify({ html, enableClarify = false }: BlogContentWithClarifyProps) {
+export default function BlogContentWithClarify({
+  html,
+  enableClarify = false,
+  topic,
+  enableCommunityCallouts = false,
+  calloutInterval = 3
+}: BlogContentWithClarifyProps) {
   const contentRef = useRef<HTMLDivElement>(null);
   const rootsRef = useRef<Map<Element, ReturnType<typeof createRoot>>>(new Map());
 
   useEffect(() => {
-    if (!enableClarify || !contentRef.current) return;
+    if (!contentRef.current) return;
 
-    // Find all h2 and h3 elements
-    const headings = contentRef.current.querySelectorAll("h2, h3");
+    // Clarify buttons on headings
+    if (enableClarify) {
+      const headings = contentRef.current.querySelectorAll("h2, h3");
 
-    headings.forEach((heading) => {
-      // Skip if already has a clarify button
-      if (heading.querySelector(".clarify-btn-container")) return;
+      headings.forEach((heading) => {
+        if (heading.querySelector(".clarify-btn-container")) return;
 
-      const topic = heading.textContent?.trim() || "";
-      if (!topic) return;
+        const headingTopic = heading.textContent?.trim() || "";
+        if (!headingTopic) return;
 
-      // Create container for React component
-      const container = document.createElement("span");
-      container.className = "clarify-btn-container";
-      heading.appendChild(container);
+        const container = document.createElement("span");
+        container.className = "clarify-btn-container";
+        heading.appendChild(container);
 
-      // Render React component
-      const root = createRoot(container);
-      root.render(<ClarifyButton topic={topic} />);
-      rootsRef.current.set(container, root);
-    });
+        const root = createRoot(container);
+        root.render(<ClarifyButton topic={headingTopic} />);
+        rootsRef.current.set(container, root);
+      });
+    }
 
-    // Cleanup function
+    // Community callouts before headers (not between paragraphs)
+    if (enableCommunityCallouts && topic) {
+      const headers = contentRef.current.querySelectorAll("h2, h3");
+      const variants: Array<"quote" | "card" | "minimal"> = ["quote", "minimal", "card"];
+      let calloutIndex = 0;
+
+      headers.forEach((header, i) => {
+        // Insert before every Nth header (skip first few to let content establish)
+        if (i >= 1 && i % calloutInterval === 0) {
+          // Skip if already has a callout before it
+          if (header.previousElementSibling?.classList.contains("community-callout-container")) return;
+
+          const container = document.createElement("div");
+          container.className = "community-callout-container";
+          header.parentNode?.insertBefore(container, header);
+
+          const root = createRoot(container);
+          root.render(
+            <CommunityCallout
+              topic={topic}
+              index={calloutIndex}
+              variant={variants[calloutIndex % variants.length]}
+            />
+          );
+          rootsRef.current.set(container, root);
+          calloutIndex++;
+        }
+      });
+    }
+
     return () => {
       rootsRef.current.forEach((root) => {
         root.unmount();
       });
       rootsRef.current.clear();
     };
-  }, [html, enableClarify]);
+  }, [html, enableClarify, enableCommunityCallouts, topic, calloutInterval]);
 
   return (
     <div

@@ -238,6 +238,6 @@ ws6['!cols'] = [
 XLSX.utils.book_append_sheet(wb, ws6, 'Deal Calculator');
 
 // Write file
-const outputPath = path.join(__dirname, '..', 'AxiomMatrix-Offerings.xlsx');
+const outputPath = path.join(__dirname, '..', 'AxioMatrix-Offerings.xlsx');
 XLSX.writeFile(wb, outputPath);
 console.log('Created:', outputPath);

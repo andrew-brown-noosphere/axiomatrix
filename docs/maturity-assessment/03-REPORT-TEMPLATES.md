@@ -12,7 +12,7 @@
 
 **Assessment Date:** [Date Range]
 **Prepared By:** [Consultant Name], [Certification]
-**Framework:** AxiomMatrix / OWASP SAMM v2.0
+**Framework:** AxioMatrix / OWASP SAMM v2.0
 
 ---
 
@@ -258,7 +258,7 @@ Actions that can be completed in <30 days with significant impact:
 
 ### 1.1 Purpose
 
-This report presents the findings of a DevSecOps Maturity Assessment conducted for [CLIENT NAME] during [DATE RANGE]. The assessment evaluates the organization's software security practices against the OWASP Software Assurance Maturity Model (SAMM) v2.0 framework, enhanced with AxiomMatrix's DevSecOps-specific criteria.
+This report presents the findings of a DevSecOps Maturity Assessment conducted for [CLIENT NAME] during [DATE RANGE]. The assessment evaluates the organization's software security practices against the OWASP Software Assurance Maturity Model (SAMM) v2.0 framework, enhanced with AxioMatrix's DevSecOps-specific criteria.
 
 ### 1.2 Objectives
 
@@ -294,7 +294,7 @@ The assessment was conducted to:
 
 ### 2.2 Methodology
 
-The assessment followed AxiomMatrix's structured methodology:
+The assessment followed AxioMatrix's structured methodology:
 
 | Phase | Duration | Activities |
 |-------|----------|------------|

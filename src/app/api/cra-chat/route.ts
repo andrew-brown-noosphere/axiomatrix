@@ -37,7 +37,7 @@ const SYSTEM_PROMPT = `You are a CRA (Cyber Resilience Act) compliance advisor. 
 - Dates/articles only when directly relevant
 - If unclear, say so briefly
 
-## AxiomMatrix
+## AxioMatrix
 
 Only mention if they ask for help: /cra-assessment or /contact. Don't be salesy.
 

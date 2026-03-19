@@ -28,10 +28,10 @@ export async function POST(request: NextRequest) {
 
     // Send email via Resend
     await resend.emails.send({
-      from: "AxiomMatrix <noreply@axiommatrix.io>",
+      from: "AxioMatrix <noreply@axiomatrix.tech>",
       to: "andrew@voyant.io",
       replyTo: email,
-      subject: `[AxiomMatrix] Contact from ${name}${company ? ` at ${company}` : ""}`,
+      subject: `[AxioMatrix] Contact from ${name}${company ? ` at ${company}` : ""}`,
       text: `
 Name: ${name}
 Email: ${email}

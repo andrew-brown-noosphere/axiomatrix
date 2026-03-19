@@ -30,6 +30,8 @@ import {
 import { brand } from "@/lib/brand";
 
 // CRA Assessment sections - 6 sections aligned to CRA requirements
+// Note: CRA has 22 core requirements in Annex I Part II, but not all apply to every product.
+// For cloud-based SaaS products, typically only ~9-12 requirements apply directly.
 const sections = [
   {
     id: "governance",
@@ -40,22 +42,22 @@ const sections = [
     questions: [
       {
         id: "gov-1",
-        question: "Do you have documented cybersecurity policies for product development?",
-        topic: "Cybersecurity Policies",
-        context: "The CRA requires manufacturers to have documented cybersecurity policies covering the entire product lifecycle. This includes secure development practices, vulnerability handling, and incident response procedures.",
-        standards: ["CRA Art. 13", "CRA Annex I Part I", "ISO/IEC 27001", "IEC 62443"],
+        question: "Have you classified your products under CRA Article 3 definitions?",
+        topic: "Product Classification",
+        context: "CRA Article 3 defines 'products with digital elements' and distinguishes between hardware and pure software products. For B2B SaaS: you're likely 'products with digital elements' but NOT 'critical' per Annex III. This classification determines which of the 22 Annex I requirements apply. Many practitioners find only ~9 requirements apply to cloud-only SaaS.",
+        standards: ["CRA Art. 3", "CRA Annex III", "CRA Annex IV", "CRA Art. 7"],
         options: [
-          { value: 0, label: "No documented cybersecurity policies exist" },
-          { value: 1, label: "Informal guidelines, not formally documented" },
-          { value: 2, label: "Documented policies covering key security areas" },
-          { value: 3, label: "Comprehensive policies with regular review cycles and audit trails" },
+          { value: 0, label: "Products not classified under CRA definitions" },
+          { value: 1, label: "Informal understanding of classification, not documented" },
+          { value: 2, label: "Formal classification with documented rationale for which Annex I requirements apply" },
+          { value: 3, label: "Complete mapping of each product to CRA categories with conformity assessment path identified" },
         ],
       },
       {
         id: "gov-2",
         question: "How do you define and communicate product support periods?",
         topic: "Support Period Management",
-        context: "CRA Article 13(8) requires manufacturers to determine and communicate the expected product lifetime and provide security updates for at least 5 years or the expected lifetime, whichever is longer.",
+        context: "CRA Article 13(8) requires manufacturers to determine and communicate the expected product lifetime and provide security updates for at least 5 years or the expected lifetime, whichever is longer. This ALWAYS applies regardless of product type.",
         standards: ["CRA Art. 13(8)", "CRA Art. 13(15)", "EN 303 645"],
         options: [
           { value: 0, label: "Support periods not defined or communicated" },
@@ -66,15 +68,15 @@ const sections = [
       },
       {
         id: "gov-3",
-        question: "Do you maintain technical documentation for conformity assessment?",
+        question: "Do you maintain technical documentation mapping evidence to each applicable CRA requirement?",
         topic: "Technical Documentation",
-        context: "CRA Annex VII requires comprehensive technical documentation including design specifications, risk assessments, and evidence of conformity with essential requirements.",
-        standards: ["CRA Annex VII", "CRA Art. 31", "CE Marking Requirements"],
+        context: "CRA Annex VII requires comprehensive technical documentation. Key insight: you don't need evidence for all 22 requirements — only those applicable to your product type. For SaaS, focus on Articles 10.1 (secure by design), 10.2 (secure by default), 10.4 (updates), 10.5 (SBOM), and Article 13 (vulnerability handling).",
+        standards: ["CRA Annex VII", "CRA Art. 31", "CRA Annex I Part II"],
         options: [
           { value: 0, label: "No technical documentation maintained" },
-          { value: 1, label: "Basic documentation exists but incomplete" },
-          { value: 2, label: "Comprehensive documentation covering most requirements" },
-          { value: 3, label: "Complete documentation with version control, ready for conformity assessment" },
+          { value: 1, label: "Basic documentation exists but not mapped to CRA requirements" },
+          { value: 2, label: "Documentation mapped to applicable Annex I requirements with some gaps" },
+          { value: 3, label: "Complete evidence package for all applicable requirements, ready for conformity assessment" },
         ],
       },
     ],
@@ -83,46 +85,46 @@ const sections = [
     id: "development",
     title: "Secure Development",
     subtitle: "Building",
-    description: "Security integrated throughout the development lifecycle",
+    description: "Articles 10.1 (secure by design) and 10.2 (secure by default) — always apply to SaaS",
     icon: Code,
     questions: [
       {
         id: "dev-1",
-        question: "How do you integrate security requirements into product design?",
-        topic: "Security by Design",
-        context: "CRA Annex I requires products to be designed, developed, and produced to ensure appropriate cybersecurity based on risks. Security must be considered from the design phase, not bolted on later.",
-        standards: ["CRA Annex I 1(a)", "NIST SSDF", "ISO/IEC 27034", "OWASP SAMM"],
+        question: "How do you demonstrate compliance with Article 10.1 'Secure by Design'?",
+        topic: "Secure by Design (Art. 10.1)",
+        context: "Article 10.1 ALWAYS applies to SaaS products. It requires products to be designed with security from the start, not bolted on. Practitioners recommend documenting: threat models, security architecture decisions, and security requirements traceability. Auditors want to see the 'why' behind design choices.",
+        standards: ["CRA Art. 10.1", "CRA Annex I 1(a)", "NIST SSDF", "OWASP SAMM"],
         options: [
-          { value: 0, label: "Security not considered during design" },
-          { value: 1, label: "Ad-hoc security considerations during development" },
-          { value: 2, label: "Security requirements documented and reviewed at design phase" },
-          { value: 3, label: "Formal threat modeling, security architecture review, and security requirements traceability" },
+          { value: 0, label: "Security not considered during design — no documentation" },
+          { value: 1, label: "Ad-hoc security decisions, not formally documented" },
+          { value: 2, label: "Documented threat models and security architecture reviews for each product" },
+          { value: 3, label: "Full security requirements traceability with documented rationale for all security decisions" },
         ],
       },
       {
         id: "dev-2",
-        question: "Do you perform security testing before product release?",
-        topic: "Security Testing",
-        context: "CRA requires products to be tested for vulnerabilities before release. This includes static analysis, dynamic testing, and penetration testing appropriate to the product's risk level.",
-        standards: ["CRA Annex I 1(c)", "OWASP Testing Guide", "IEC 62443-4-1", "ISO/IEC 27034"],
+        question: "How do you prove 'Secure by Default' for Article 10.2?",
+        topic: "Secure by Default (Art. 10.2)",
+        context: "Article 10.2 ALWAYS applies. Key practitioner question: 'Is a default configuration audit enough, or are auditors expecting something more?' Answer: Document your default configs AND the security rationale behind each choice. Auditors want to see both WHAT the defaults are and WHY they're secure.",
+        standards: ["CRA Art. 10.2", "CRA Annex I 1(d)", "CRA Annex I 2(1)", "CIS Benchmarks"],
         options: [
-          { value: 0, label: "No security testing performed" },
-          { value: 1, label: "Basic automated scanning only" },
-          { value: 2, label: "Comprehensive SAST/DAST with remediation tracking" },
-          { value: 3, label: "Full security testing program including penetration testing and third-party assessment" },
+          { value: 0, label: "Default configurations not security-reviewed" },
+          { value: 1, label: "Basic secure defaults but no documentation of rationale" },
+          { value: 2, label: "Documented secure defaults with security rationale for key settings" },
+          { value: 3, label: "Comprehensive default config documentation with security justification AND automated validation testing" },
         ],
       },
       {
         id: "dev-3",
-        question: "How do you ensure secure default configurations?",
-        topic: "Secure Defaults",
-        context: "CRA Annex I requires products to be delivered with secure default configurations, including protection against unauthorized access and mechanisms for data protection.",
-        standards: ["CRA Annex I 1(d)", "CRA Annex I 2(1)", "CIS Benchmarks", "NIST SP 800-123"],
+        question: "How do you handle Article 10.4 security updates for your SaaS product?",
+        topic: "Security Updates (Art. 10.4)",
+        context: "Article 10.4 requires mechanisms to ensure timely security updates. For SaaS, this is typically easier than hardware since you control deployment. However, you must document your update process, testing procedures, and rollback capabilities. Multi-tenant SaaS needs extra consideration for update impact.",
+        standards: ["CRA Art. 10.4", "CRA Annex I 2(5)", "NIST SP 800-40"],
         options: [
-          { value: 0, label: "Default configurations not security-reviewed" },
-          { value: 1, label: "Some security defaults, inconsistently applied" },
-          { value: 2, label: "Documented secure default configuration standards" },
-          { value: 3, label: "Hardened defaults with security configuration guides and validation testing" },
+          { value: 0, label: "No formal update process — ad-hoc deployments" },
+          { value: 1, label: "Regular updates but process not documented for auditors" },
+          { value: 2, label: "Documented update process with testing and rollback procedures" },
+          { value: 3, label: "Automated CI/CD with security testing gates, documented rollback, and customer notification system" },
         ],
       },
     ],
@@ -131,46 +133,46 @@ const sections = [
     id: "vulnerability",
     title: "Vulnerability Management",
     subtitle: "Responding",
-    description: "Handling vulnerabilities throughout the product lifecycle",
+    description: "Article 13 vulnerability handling — key practitioner pain point",
     icon: Bug,
     questions: [
       {
         id: "vuln-1",
-        question: "Do you have a coordinated vulnerability disclosure process?",
-        topic: "Vulnerability Disclosure",
-        context: "CRA Article 13(6) requires manufacturers to have policies and procedures for coordinated vulnerability disclosure, including a contact point for reporting vulnerabilities.",
+        question: "Do you have coordinated vulnerability disclosure per Article 13(6)?",
+        topic: "Coordinated Disclosure (Art. 13)",
+        context: "CRA expects 'coordinated vulnerability disclosure' — not just internal handling. You need a public security contact, documented disclosure policy, and defined timelines. Key insight: this means formalizing your external reporting process, not just fixing bugs internally.",
         standards: ["CRA Art. 13(6)", "ISO/IEC 29147", "ISO/IEC 30111", "CERT Guide"],
         options: [
-          { value: 0, label: "No vulnerability disclosure process exists" },
-          { value: 1, label: "Ad-hoc handling of reported vulnerabilities" },
-          { value: 2, label: "Documented disclosure policy with security contact" },
-          { value: 3, label: "Mature CVD program with SLAs, bug bounty, and researcher relationships" },
+          { value: 0, label: "No public vulnerability disclosure process exists" },
+          { value: 1, label: "Have security@company.com but no formal policy" },
+          { value: 2, label: "Documented disclosure policy with public security.txt and response SLAs" },
+          { value: 3, label: "Mature CVD program with bug bounty, researcher relationships, and hall of fame" },
         ],
       },
       {
         id: "vuln-2",
-        question: "Can you meet the 24-hour notification requirement for actively exploited vulnerabilities?",
-        topic: "Rapid Notification",
-        context: "CRA Article 14 requires notification to ENISA within 24 hours of becoming aware of an actively exploited vulnerability. This requires real-time detection and reporting capabilities.",
-        standards: ["CRA Art. 14(2)(a)", "CRA Art. 14(3)", "NIS2 Directive"],
+        question: "Can you meet the 24-hour notification requirement for critical vulnerabilities?",
+        topic: "24-Hour Notification (Art. 14)",
+        context: "The 24-hour notification requirement for critical/actively exploited vulnerabilities is tight. Practitioners report this requires: 24/7 security monitoring, pre-drafted notification templates, designated personnel with authority to notify, and tested escalation procedures. Have you actually tested this?",
+        standards: ["CRA Art. 14(2)(a)", "CRA Art. 14(3)", "NIS2 Directive", "ENISA"],
         options: [
           { value: 0, label: "No capability to detect or report within 24 hours" },
-          { value: 1, label: "Manual processes, 24-hour timeline would be challenging" },
-          { value: 2, label: "Processes exist but not tested against 24-hour SLA" },
-          { value: 3, label: "Tested incident response with proven 24-hour notification capability" },
+          { value: 1, label: "Manual processes exist but never tested against 24-hour SLA" },
+          { value: 2, label: "Documented procedures with designated personnel, not yet tested" },
+          { value: 3, label: "24/7 monitoring with tested notification workflows — proven sub-24-hour capability" },
         ],
       },
       {
         id: "vuln-3",
-        question: "How quickly can you develop and deploy security patches?",
+        question: "What's your actual patch deployment velocity for security fixes?",
         topic: "Patch Velocity",
-        context: "CRA requires manufacturers to address vulnerabilities without delay and provide security updates free of charge. Patch velocity directly impacts your ability to meet CRA obligations.",
-        standards: ["CRA Art. 13(8)", "CRA Annex I 2(5)", "FIRST PSIRT Services Framework"],
+        context: "CRA requires addressing vulnerabilities 'without delay'. For SaaS, you control deployment which helps. But do you have: automated security testing in CI/CD, fast-track approval for security patches, and rollback procedures? Measure your actual time from 'vulnerability confirmed' to 'patch in production'.",
+        standards: ["CRA Art. 13(8)", "CRA Annex I 2(5)", "FIRST PSIRT"],
         options: [
-          { value: 0, label: "No established patching process, weeks or months to deploy" },
-          { value: 1, label: "Patches deployed within weeks for critical issues" },
-          { value: 2, label: "Critical patches within days, routine patches within weeks" },
-          { value: 3, label: "Emergency patches within 24-48 hours, automated deployment infrastructure" },
+          { value: 0, label: "No metrics — patches take weeks or longer" },
+          { value: 1, label: "Critical patches within 1-2 weeks, but not measured formally" },
+          { value: 2, label: "Measured metrics: Critical within 72 hours, High within 7 days" },
+          { value: 3, label: "Emergency patches within 24 hours with automated deployment and rollback" },
         ],
       },
     ],
@@ -179,46 +181,46 @@ const sections = [
     id: "supply-chain",
     title: "Supply Chain Security",
     subtitle: "Components",
-    description: "Managing third-party components and dependencies",
+    description: "Article 10.5 SBOM requirements — the big one most teams are missing",
     icon: Package,
     questions: [
       {
         id: "sc-1",
-        question: "Do you generate and maintain Software Bills of Materials (SBOMs)?",
-        topic: "SBOM Generation",
-        context: "CRA Article 13(5) requires identifying and documenting components, including open source. SBOMs are essential for tracking vulnerabilities in third-party components.",
-        standards: ["CRA Art. 13(5)", "NTIA SBOM", "CycloneDX", "SPDX"],
+        question: "At what granularity are you generating SBOMs for Article 10.5?",
+        topic: "SBOM Granularity (Art. 10.5)",
+        context: "Article 10.5 (SBOM) is the big one most teams are missing. Key practitioner question: 'Are you doing SBOMs at repo level or service level for microservices?' Teams report auditors want BOTH — service-level for operational context and repo-level for build provenance. This is more work than most expect.",
+        standards: ["CRA Art. 10.5", "CRA Art. 13(5)", "NTIA SBOM", "CycloneDX", "SPDX"],
         options: [
-          { value: 0, label: "No SBOM generation or component tracking" },
-          { value: 1, label: "Manual component lists, not comprehensive" },
-          { value: 2, label: "Automated SBOM generation for most products" },
-          { value: 3, label: "Full SBOM automation with vulnerability monitoring and customer distribution" },
+          { value: 0, label: "No SBOM generation — major compliance gap" },
+          { value: 1, label: "Manual component lists or repo-level only, not service-level" },
+          { value: 2, label: "Automated SBOM generation at repo level with CI/CD integration" },
+          { value: 3, label: "Both repo-level AND service-level SBOMs with vulnerability monitoring and customer distribution" },
         ],
       },
       {
         id: "sc-2",
-        question: "How do you assess security of third-party components before use?",
-        topic: "Component Assessment",
-        context: "CRA holds manufacturers responsible for the security of all components in their products. Due diligence on third-party components is essential for compliance.",
-        standards: ["CRA Annex I 1(a)", "OWASP Dependency-Check", "OpenSSF Scorecard", "SLSA"],
+        question: "How do you demonstrate component provenance for supply chain requirements?",
+        topic: "Component Provenance",
+        context: "CRA holds manufacturers responsible for ALL components. Beyond just scanning for vulnerabilities, you need to demonstrate WHERE components come from and that they haven't been tampered with. This aligns with SLSA framework levels.",
+        standards: ["CRA Annex I 1(a)", "SLSA", "OpenSSF Scorecard", "Sigstore"],
         options: [
-          { value: 0, label: "No security assessment of third-party components" },
-          { value: 1, label: "Basic license compliance checks only" },
-          { value: 2, label: "Vulnerability scanning of dependencies before use" },
-          { value: 3, label: "Comprehensive evaluation including security posture, maintenance, and provenance" },
+          { value: 0, label: "No component provenance tracking" },
+          { value: 1, label: "Basic package manager lockfiles only" },
+          { value: 2, label: "Signed commits and verified package sources" },
+          { value: 3, label: "Full SLSA Level 2+ with build provenance attestations and artifact signing" },
         ],
       },
       {
         id: "sc-3",
-        question: "Do you monitor components for newly discovered vulnerabilities?",
-        topic: "Continuous Monitoring",
-        context: "Vulnerabilities are discovered in components after integration. CRA requires manufacturers to address vulnerabilities throughout the product lifecycle, necessitating continuous monitoring.",
-        standards: ["CRA Art. 13(8)", "CVE", "OSV", "GitHub Advisory Database"],
+        question: "Do you have remediation SLAs for vulnerable dependencies?",
+        topic: "Vulnerability Remediation",
+        context: "Finding vulnerabilities is step one — CRA also requires addressing them 'without delay'. Practitioners recommend defining explicit SLAs: Critical within 24-48 hours, High within 7 days, Medium within 30 days. Document these SLAs for auditors.",
+        standards: ["CRA Art. 13(8)", "CRA Annex I 2(5)", "CVE", "FIRST PSIRT"],
         options: [
-          { value: 0, label: "No ongoing monitoring of component vulnerabilities" },
-          { value: 1, label: "Periodic manual checks" },
-          { value: 2, label: "Automated alerts for known vulnerabilities in dependencies" },
-          { value: 3, label: "Real-time monitoring with automated triage and remediation workflows" },
+          { value: 0, label: "No defined remediation timelines — 'when we get to it'" },
+          { value: 1, label: "Ad-hoc prioritization, no formal SLAs" },
+          { value: 2, label: "Documented remediation SLAs by severity level" },
+          { value: 3, label: "Automated SLA tracking with escalation procedures and compliance reporting" },
         ],
       },
     ],
@@ -275,46 +277,46 @@ const sections = [
     id: "conformity",
     title: "Conformity Assessment",
     subtitle: "Certifying",
-    description: "Demonstrating compliance and CE marking readiness",
+    description: "Self-assessment vs third-party certification — know your path",
     icon: FileCheck,
     questions: [
       {
         id: "conf-1",
-        question: "Have you classified your products under CRA categories?",
-        topic: "Product Classification",
-        context: "CRA categorizes products as Default, Important (Class I/II), or Critical. Classification determines conformity assessment requirements - self-assessment vs. third-party certification.",
-        standards: ["CRA Art. 7", "CRA Annex III", "CRA Annex IV"],
+        question: "Do you know which conformity assessment path applies to your products?",
+        topic: "Assessment Path",
+        context: "Good news for most SaaS: if your product is NOT on Annex III (critical) or Annex IV (important), you can self-assess. Only 'Important' and 'Critical' products require third-party conformity assessment. Most B2B SaaS falls under 'Default' category — self-assessment with proper documentation.",
+        standards: ["CRA Art. 24-27", "CRA Annex III", "CRA Annex IV", "CRA Art. 7"],
         options: [
-          { value: 0, label: "Products not classified under CRA categories" },
-          { value: 1, label: "Informal understanding of likely classification" },
-          { value: 2, label: "Formal classification with supporting rationale" },
-          { value: 3, label: "Classification documented, conformity assessment path identified for each product" },
+          { value: 0, label: "Don't know if third-party assessment required" },
+          { value: 1, label: "Believe self-assessment applies but haven't verified" },
+          { value: 2, label: "Confirmed assessment path with documented rationale" },
+          { value: 3, label: "Assessment path confirmed, notified body engaged if required" },
         ],
       },
       {
         id: "conf-2",
-        question: "Do you have evidence to demonstrate conformity with essential requirements?",
-        topic: "Conformity Evidence",
-        context: "CRA Annex I lists essential cybersecurity requirements. You need documented evidence demonstrating how each applicable requirement is met for conformity assessment.",
+        question: "Have you built a compliance matrix mapping evidence to each applicable CRA requirement?",
+        topic: "Compliance Matrix",
+        context: "Practitioners recommend building a compliance matrix early. For each of the ~9-12 applicable requirements (SaaS typically doesn't need all 22), document: the requirement text, your control, evidence location, and responsible owner. This makes audits dramatically easier.",
         standards: ["CRA Annex I", "CRA Annex VII", "EN 303 645", "IEC 62443"],
         options: [
-          { value: 0, label: "No evidence collection or mapping to requirements" },
-          { value: 1, label: "Some evidence exists but not organized against requirements" },
-          { value: 2, label: "Evidence mapped to essential requirements with gaps identified" },
-          { value: 3, label: "Complete evidence package ready for conformity assessment" },
+          { value: 0, label: "No compliance matrix or evidence mapping" },
+          { value: 1, label: "Informal understanding of requirements, no matrix" },
+          { value: 2, label: "Compliance matrix in progress with gaps identified" },
+          { value: 3, label: "Complete matrix with evidence for all applicable requirements and named owners" },
         ],
       },
       {
         id: "conf-3",
-        question: "Are you prepared for CE marking and EU Declaration of Conformity?",
-        topic: "CE Marking Readiness",
-        context: "CRA-compliant products must bear CE marking and be accompanied by an EU Declaration of Conformity. This requires completing conformity assessment and maintaining technical documentation.",
-        standards: ["CRA Art. 28", "CRA Art. 30", "CRA Annex VI", "Decision 768/2008/EC"],
+        question: "What's your timeline for achieving CRA compliance?",
+        topic: "Compliance Timeline",
+        context: "Key deadlines: Vulnerability reporting starts September 2026. Full compliance required by December 2027. Practitioners who started early report 3-6 months minimum for compliance work. Third-party assessment adds additional time. Have you built this into your roadmap?",
+        standards: ["CRA Art. 71", "CRA Art. 28", "CRA Art. 30", "CRA Annex VI"],
         options: [
-          { value: 0, label: "CE marking process not understood or planned" },
-          { value: 1, label: "Aware of requirements but not prepared" },
-          { value: 2, label: "Preparing documentation and conformity assessment" },
-          { value: 3, label: "Ready to affix CE marking with complete Declaration of Conformity" },
+          { value: 0, label: "No compliance timeline — haven't started planning" },
+          { value: 1, label: "Aware of deadlines but no formal project plan" },
+          { value: 2, label: "Compliance project underway with milestones aligned to CRA deadlines" },
+          { value: 3, label: "On track for compliance ahead of deadlines with contingency buffer" },
         ],
       },
     ],
@@ -1212,7 +1214,6 @@ export default function CRAAssessmentPage() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [selectedOption, setSelectedOption] = useState<number | null>(null);
   const [showRiskAssessment, setShowRiskAssessment] = useState(false);
-  const [showRiskPopup, setShowRiskPopup] = useState(false);
   const [isAnimating, setIsAnimating] = useState(false);
   const [animationDirection, setAnimationDirection] = useState<"in" | "out">("in");
 
@@ -1233,17 +1234,6 @@ export default function CRAAssessmentPage() {
     const timer = setTimeout(() => setIsAnimating(false), 400);
     return () => clearTimeout(timer);
   }, [currentSection, currentQuestion]);
-
-  useEffect(() => {
-    const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.key === "Enter" && !showRiskPopup && !showResults) {
-        e.preventDefault();
-        handleNext();
-      }
-    };
-    window.addEventListener("keydown", handleKeyDown);
-    return () => window.removeEventListener("keydown", handleKeyDown);
-  }, [showRiskPopup, showResults, answers, question.id]);
 
   const handleAnswer = (value: number) => {
     setSelectedOption(value);
@@ -1276,18 +1266,20 @@ export default function CRAAssessmentPage() {
     animateAndNavigate(navigate);
   }, [currentQuestion, currentSection, section.questions.length, animateAndNavigate]);
 
-  const handleNext = () => {
-    if (answers[question.id] !== undefined) {
-      setShowRiskPopup(true);
-    } else {
-      navigateToNext();
-    }
-  };
-
-  const handleRiskPopupContinue = () => {
-    setShowRiskPopup(false);
+  const handleNext = useCallback(() => {
     navigateToNext();
-  };
+  }, [navigateToNext]);
+
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Enter" && !showResults) {
+        e.preventDefault();
+        handleNext();
+      }
+    };
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [showResults, handleNext]);
 
   const handleBack = () => {
     const navigate = () => {
@@ -1782,65 +1774,6 @@ export default function CRAAssessmentPage() {
         </div>
       </div>
 
-      {/* Risk Assessment Popup */}
-      {showRiskPopup && answers[question.id] !== undefined && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
-          <div
-            className="absolute inset-0 bg-black/70 backdrop-blur-sm"
-            onClick={handleRiskPopupContinue}
-          />
-
-          <div className="relative w-full max-w-md animate-in fade-in zoom-in-95 duration-200">
-            <div className="bg-zinc-900 border border-zinc-700 rounded-2xl overflow-hidden shadow-2xl">
-              <div className={`p-6 bg-gradient-to-br ${
-                answers[question.id] === 0 ? "from-red-500/20 to-red-500/5" :
-                answers[question.id] === 1 ? "from-amber-500/20 to-amber-500/5" :
-                answers[question.id] === 2 ? "from-cyan-500/20 to-cyan-500/5" :
-                "from-green-500/20 to-green-500/5"
-              }`}>
-                <div className="flex items-center gap-3 mb-3">
-                  <div className={`p-2 rounded-xl ${
-                    answers[question.id] === 0 ? "bg-red-500/20" :
-                    answers[question.id] === 1 ? "bg-amber-500/20" :
-                    answers[question.id] === 2 ? "bg-cyan-500/20" :
-                    "bg-green-500/20"
-                  }`}>
-                    <AlertTriangle className={`h-5 w-5 ${riskAssessments[answers[question.id]].color}`} />
-                  </div>
-                  <div>
-                    <p className="text-xs text-zinc-500 uppercase tracking-wider">Compliance Gap</p>
-                    <h3 className={`text-lg font-semibold ${riskAssessments[answers[question.id]].color}`}>
-                      {riskAssessments[answers[question.id]].level}
-                    </h3>
-                  </div>
-                </div>
-              </div>
-
-              <div className="p-6">
-                <p className="text-zinc-300 leading-relaxed mb-4">
-                  {riskAssessments[answers[question.id]].message}
-                </p>
-
-                <div className="flex items-center gap-2 text-sm text-zinc-500 mb-6">
-                  <span className="px-2 py-1 rounded bg-zinc-800 text-zinc-400">
-                    Level {answers[question.id]} selected
-                  </span>
-                  <span>·</span>
-                  <span>{question.topic}</span>
-                </div>
-
-                <button
-                  onClick={handleRiskPopupContinue}
-                  className="w-full flex items-center justify-center gap-2 px-6 py-3 rounded-xl font-medium bg-gradient-to-r from-cyan-500 to-cyan-400 text-black hover:from-cyan-400 hover:to-cyan-300 transition-all"
-                >
-                  Continue
-                  <ArrowRight className="h-4 w-4" />
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
-      )}
     </div>
   );
 }

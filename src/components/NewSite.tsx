@@ -33,21 +33,21 @@ const services = [
     title: "Core DevSecOps Maturity Assessment",
     description:
       "We pinpoint your security challenges and deliver a high-impact plan that strengthens your code and fortifies your pipeline.",
-    href: "/contact",
+    href: "/core-devsecops-maturity-assessment",
   },
   {
     icon: Settings,
     title: "Tailored CI/CD Pipeline Security Integration",
     description:
       "We integrate security into your CI/CD pipeline, strengthening every stage of delivery and enabling faster, safer releases.",
-    href: "/contact",
+    href: "/tailored-ci-cd-pipeline-security-integration",
   },
   {
     icon: Bot,
     title: "Custom AI Agents & MCP Servers",
     description:
       "We build secure agentic workflows—custom APIs, AI agents, and MCP servers that integrate safely into your infrastructure.",
-    href: "/contact",
+    href: "/custom-ai-agents-mcp-servers",
   },
 ];
 

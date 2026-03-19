@@ -5,7 +5,7 @@
 
 ## Overview
 
-This document describes the complete deliverables package for the AxiomMatrix DevSecOps Maturity Assessment engagement.
+This document describes the complete deliverables package for the AxioMatrix DevSecOps Maturity Assessment engagement.
 
 ---
 
@@ -442,11 +442,11 @@ All deliverables are marked **[CLIENT] CONFIDENTIAL** and are:
 
 ## Contact
 
-**AxiomMatrix**
+**AxioMatrix**
 Your trusted guide on the DevSecOps journey
 
 [Consultant Name]
 [Email]
 [Phone]
 
-www.axiommatrix.io
+www.axiomatrix.tech
