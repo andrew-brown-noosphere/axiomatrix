@@ -11,8 +11,8 @@ export const brand = {
   email: "andrew@voyant.io",
 
   // [CUSTOMIZE] Social links (leave empty string to hide)
-  linkedin: "https://linkedin.com/company/yourbrand",
-  twitter: "https://twitter.com/yourbrand",
+  linkedin: "",
+  twitter: "",
 
   // [CUSTOMIZE] Logo - replace with your logo file
   logo: "/img/logo/logo-AM.jpg",
