@@ -45,7 +45,7 @@ export default function LayoutWrapper({
                 className="rounded-lg shadow-lg shadow-cyan-500/20"
               />
               <span className="text-xl font-bold">
-                <span className="text-cyan-400 drop-shadow-[0_0_8px_rgba(34,211,238,0.4)]">Axiom</span>
+                <span className="text-cyan-400 drop-shadow-[0_0_8px_rgba(34,211,238,0.4)]">Axio</span>
                 <span className="text-white">Matrix</span>
               </span>
             </Link>
@@ -94,7 +94,7 @@ export default function LayoutWrapper({
                   className="rounded-lg shadow-lg shadow-cyan-500/20"
                 />
                 <span className="text-2xl font-bold">
-                  <span className="text-cyan-400 drop-shadow-[0_0_8px_rgba(34,211,238,0.4)]">Axiom</span>
+                  <span className="text-cyan-400 drop-shadow-[0_0_8px_rgba(34,211,238,0.4)]">Axio</span>
                   <span className="text-white">Matrix</span>
                 </span>
               </div>
